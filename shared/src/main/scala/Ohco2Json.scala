@@ -9,9 +9,9 @@ package citejson {
   /** A Class for creating service requests resolving to binary image data
   * and following the IIIF-API.
   *
-  * @constructor create a new [[CiteObjJson]] service
+  * @constructor create a new [[Ohco2Json]] service
   */
-  @JSExportAll case class CiteObjJson() {
+  @JSExportAll case class Ohco2Json() {
       def exists:Boolean = {
       	true
       }
