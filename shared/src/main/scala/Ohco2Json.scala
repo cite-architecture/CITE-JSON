@@ -227,6 +227,39 @@ package citejson {
           case e:Exception =>  throw new CiteException(s"${e}")
         }
       }
+
+      /** Given a JSON string, construct a Vector of CitableNodes
+      * @param jsonString
+      */
+      def o2VectorOfCitableNodes(jsonString:String):Vector[CitableNode] = {
+        try {
+          val doc: Json = parse(jsonString).getOrElse(Json.Null)
+          val o2CitNodes:Vector[CitableNode] = o2VectorOfCitableNodes(doc)
+          o2CitNodes
+        } catch {
+          case e:Exception =>  throw new CiteException(s"${e}")
+        }
+      }
+
+       /** Given a io.circe.Json object, construct a Vector of CitableNodes
+      * @param doc
+      */
+      def o2VectorOfCitableNodes(doc:Json):Vector[CitableNode] = {
+        try {
+          if(doc == Json.Null) throw new CiteException(s"Null JSON")
+          // We need a cursor to get stuff
+          val cursor: HCursor = doc.hcursor
+          val jsonList = cursor.downField("citableNodes").as[List[Json]]
+          val ceList:List[Json] = jsonList match {
+            case Right(jl) => jl
+            case _ => throw new CiteException("Failed to parse catalog into list of Catalog Entry JSON objects.")
+          }
+          val nodeVector:Vector[CitableNode] = ceList.map(ce => o2CitableNode(ce)).toVector
+          nodeVector
+        } catch {
+          case e:Exception =>  throw new CiteException(s"${e}")
+        }
+      }
   }
 
 }

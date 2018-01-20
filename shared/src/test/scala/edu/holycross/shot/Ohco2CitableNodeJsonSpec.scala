@@ -11,7 +11,7 @@ class Ohco2CitableNodeJsonSpec extends FlatSpec {
   val oneNodeJson:String = """{"urn":"urn:cts:greekLit:tlg0012.tlg001.perseus_grc2:1.1","text":"Μῆνιν ἄειδε θεὰ Πηληϊάδεω Ἀχιλῆος"} """
 
   val someNodesJson:String = """
-{"citableNodes":[{"urn":"urn:cts:greekLit:tlg0012.tlg001.perseus_grc2:1.1","text":"Μῆνιν ἄειδε θεὰ Πηληϊάδεω Ἀχιλῆος "},{"urn":"urn:cts:greekLit:tlg0012.tlg001.perseus_grc2:1.2","text":"οὐλομένην, ἣ μυρί᾽ Ἀχαιοῖς ἄλγε᾽ ἔθηκε, "},{"urn":"urn:cts:greekLit:tlg0012.tlg001.perseus_grc2:1.3","text":"πολλὰς δ᾽ ἰφθίμους ψυχὰς Ἄϊδι προΐαψεν "},{"urn":"urn:cts:greekLit:tlg0012.tlg001.perseus_grc2:1.4","text":"ἡρώων, αὐτοὺς δὲ ἑλώρια τεῦχε κύνεσσιν "},{"urn":"urn:cts:greekLit:tlg0012.tlg001.perseus_grc2:1.5","text":"οἰωνοῖσί τε πᾶσι, Διὸς δ᾽ ἐτελείετο βουλή, "}]}
+{"citableNodes":[{"urn":"urn:cts:greekLit:tlg0012.tlg001.perseus_grc2:1.1","text":"Μῆνιν ἄειδε θεὰ Πηληϊάδεω Ἀχιλῆος"},{"urn":"urn:cts:greekLit:tlg0012.tlg001.perseus_grc2:1.2","text":"οὐλομένην, ἣ μυρί᾽ Ἀχαιοῖς ἄλγε᾽ ἔθηκε,"},{"urn":"urn:cts:greekLit:tlg0012.tlg001.perseus_grc2:1.3","text":"πολλὰς δ᾽ ἰφθίμους ψυχὰς Ἄϊδι προΐαψεν "},{"urn":"urn:cts:greekLit:tlg0012.tlg001.perseus_grc2:1.4","text":"ἡρώων, αὐτοὺς δὲ ἑλώρια τεῦχε κύνεσσιν "},{"urn":"urn:cts:greekLit:tlg0012.tlg001.perseus_grc2:1.5","text":"οἰωνοῖσί τε πᾶσι, Διὸς δ᾽ ἐτελείετο βουλή,"}]}
   """
 
 
@@ -21,6 +21,17 @@ class Ohco2CitableNodeJsonSpec extends FlatSpec {
     val cn:CitableNode = cjo.o2CitableNode(oneNodeJson) 
     assert(cn.urn == CtsUrn("urn:cts:greekLit:tlg0012.tlg001.perseus_grc2:1.1"))
     assert(cn.text == "Μῆνιν ἄειδε θεὰ Πηληϊάδεω Ἀχιλῆος")
+  }
+
+  it should "parse a vector of Citable Nodes" in {
+    val cjo:Ohco2Json = Ohco2Json()
+    assert(cjo.exists)
+    val vcn:Vector[CitableNode] = cjo.o2VectorOfCitableNodes(someNodesJson) 
+    assert(vcn.size == 5)
+    assert(vcn(0).urn == CtsUrn("urn:cts:greekLit:tlg0012.tlg001.perseus_grc2:1.1"))
+    assert(vcn(0).text == "Μῆνιν ἄειδε θεὰ Πηληϊάδεω Ἀχιλῆος")
+    assert(vcn(4).urn == CtsUrn("urn:cts:greekLit:tlg0012.tlg001.perseus_grc2:1.5"))
+    assert(vcn(4).text == "οἰωνοῖσί τε πᾶσι, Διὸς δ᾽ ἐτελείετο βουλή,")
   }
 
 
