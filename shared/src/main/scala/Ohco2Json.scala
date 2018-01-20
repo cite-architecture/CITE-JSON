@@ -183,6 +183,50 @@ package citejson {
           case e:Exception =>  throw new CiteException(s"${e}")
         }
       }
+
+      /** Given a JSON string, construct a CitableNode
+      * @param jsonString
+      */
+      def o2CitableNode(jsonString:String):CitableNode = {
+        try {
+          val doc: Json = parse(jsonString).getOrElse(Json.Null)
+          val o2CitNode:CitableNode = o2CitableNode(doc)
+          o2CitNode
+        } catch {
+          case e:Exception =>  throw new CiteException(s"${e}")
+        }
+      }
+
+       /** Given a io.circe.Json object, construct a CitableNode
+      * @param doc
+      */
+      def o2CitableNode(doc:Json):CitableNode = {
+        try {
+          if(doc == Json.Null) throw new CiteException(s"Null JSON")
+          // We need a cursor to get stuff
+          val cursor: HCursor = doc.hcursor
+          // Get URN
+          val urnString = cursor.get[String]("urn")
+          val urn:CtsUrn = { 
+            urnString match {
+              case Right(s) => CtsUrn(s)
+              case Left(er) => throw new CiteException(s"Unable to make URN: ${er}")
+            }
+          }
+          // Get Text
+          val textString = cursor.get[String]("text")
+          val text:String = { 
+            textString match {
+              case Right(s) => s
+              case Left(er) => throw new CiteException(s"Unable to make URN: ${er}")
+            }
+          }
+          val cn:CitableNode = CitableNode(urn, text)
+          cn
+        } catch {
+          case e:Exception =>  throw new CiteException(s"${e}")
+        }
+      }
   }
 
 }
