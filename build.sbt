@@ -33,6 +33,7 @@ lazy val crossed = crossProject.in(file(".")).
       libraryDependencies ++= Seq(
         "io.circe" %%% "circe-core",
         "io.circe" %%% "circe-generic",
+        "io.circe" %%% "circe-optics",
         "io.circe" %%% "circe-parser"
       ).map(_ % circeVersion)
     ).

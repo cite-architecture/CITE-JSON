@@ -5,6 +5,7 @@ import edu.holycross.shot.cite._
 import edu.holycross.shot.ohco2._
 import io.circe._, io.circe.generic.auto._, io.circe.parser._, io.circe.syntax._
 import io.circe.parser.decode
+import io.circe.optics.JsonPath._
 
 package citejson {
 
@@ -260,6 +261,85 @@ package citejson {
           case e:Exception =>  throw new CiteException(s"${e}")
         }
       }
+
+      /** Given a JSON string, construct a StringCount
+      * @param jsonString
+      */
+      def o2StringCount(jsonString:String):StringCount = {
+        try {
+          val doc: Json = parse(jsonString).getOrElse(Json.Null)
+          val o2StrCnt:StringCount = o2StringCount(doc)
+          o2StrCnt
+        } catch {
+          case e:Exception =>  throw new CiteException(s"${e}")
+        }
+      }
+
+      /** Given a JSON object, construct a StringCount
+      * @param doc
+      */
+      def o2StringCount(doc:Json):StringCount = {
+        try {
+          if(doc == Json.Null) throw new CiteException(s"Null JSON")
+          // We need a cursor to get stuff
+          val cursor: HCursor = doc.hcursor
+          val js = cursor.get[String]("s")
+          val s:String = { 
+            js match {
+              case Right(s) => s
+              case Left(er) => throw new CiteException(s"Unable to make URN: ${er}")
+            }
+          }
+          val jc = cursor.get[String]("count")
+          val c:Int = { 
+            jc match {
+              case Right(c) => c.toInt
+              case Left(er) => throw new CiteException(s"Unable to make URN: ${er}")
+            }
+          }
+          StringCount(s,c)
+        } catch {
+          case e:Exception =>  throw new CiteException(s"${e}")
+        }
+      }
+
+      /** Given a JSON string, construct a Vector of StringCounts
+      * @param jsonString
+      */
+      def o2VectorOfStringCounts(jsonString:String):Vector[StringCount] = {
+        try {
+          val doc: Json = parse(jsonString).getOrElse(Json.Null)
+          val o2VecStrCnt:Vector[StringCount] = o2VectorOfStringCounts(doc)
+          o2VecStrCnt
+        } catch {
+          case e:Exception =>  throw new CiteException(s"${e}")
+        }
+      }
+
+      /** Given a JSON string, construct a Vector of StringCounts
+      * @param doc
+      */
+      def o2VectorOfStringCounts(doc:Json):Vector[StringCount] = {
+        try {
+          if(doc == Json.Null) throw new CiteException(s"Null JSON")
+          // We need a cursor to get stuff
+          val cursor: HCursor = doc.hcursor
+          // Get a list of stringcount Jsons
+          val possibleSCJsonList = cursor.downField("ngramHisto").as[List[Json]]
+          val sCJsonList:List[Json] = possibleSCJsonList match {
+            case Right(scl) => scl
+            case _ => throw new CiteException("Failed to parse catalog into list of String Count items.")
+          }
+          val vectorStrCnt:Vector[StringCount] = sCJsonList.map( scJson => {
+            val sc:StringCount = o2StringCount(scJson)
+            sc
+          }).toVector
+          vectorStrCnt
+        } catch {
+          case e:Exception =>  throw new CiteException(s"${e}")
+        }
+      }
+
   }
 
 }
