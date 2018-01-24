@@ -326,9 +326,13 @@ package citejson {
           val cursor: HCursor = doc.hcursor
           // Get a list of stringcount Jsons
           val possibleSCJsonList = cursor.downField("ngramHisto").as[List[Json]]
+
           val sCJsonList:List[Json] = possibleSCJsonList match {
             case Right(scl) => scl
-            case _ => throw new CiteException("Failed to parse catalog into list of String Count items.")
+            case _ => {
+                val emptyList:List[Json] = List() 
+                emptyList
+            }
           }
           val vectorStrCnt:Vector[StringCount] = sCJsonList.map( scJson => {
             val sc:StringCount = o2StringCount(scJson)

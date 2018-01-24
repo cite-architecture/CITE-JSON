@@ -16,11 +16,10 @@ class Ohco2NgramHistoJsonSpec extends FlatSpec {
   "The Ohco2Json library" should "parse a single Json expression into a StringCount" in {
     val cjo:Ohco2Json = Ohco2Json()
     assert(cjo.exists)
-    val sc:StringCount = cjo.o2StringCount(oneNodeJson) 
+    val sc:StringCount = cjo.o2StringCount(oneNodeJson)
     assert(sc.s == "ἔπεα πτερόεντα προσηύδα")
     assert(sc.count == 55)
   }
-
 
   it should "parse a vector of StringCounts" in {
     val cjo:Ohco2Json = Ohco2Json()
@@ -31,6 +30,14 @@ class Ohco2NgramHistoJsonSpec extends FlatSpec {
     assert(sc(0).count == 55)
     assert(sc(2).s == "Ὣς ἔφαθ᾽ οἳ")
     assert(sc(2).count == 43)
+  }
+
+  it should "not fail when there is no data, but produce an empty vector" in {
+    val noNodesJson:String= """{}"""
+    val cjo:Ohco2Json = Ohco2Json()
+    assert(cjo.exists)
+    val sc:Vector[StringCount] = cjo.o2VectorOfStringCounts(noNodesJson) 
+    assert(sc.size == 0)
   }
 
 
