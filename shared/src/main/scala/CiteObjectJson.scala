@@ -381,6 +381,34 @@ package citejson {
           case e:Exception =>  throw new CiteException(s"${e}")
         }
       }
+
+      def vectorOfCiteObjects(jsonString:String):Vector[CiteObject] = {
+        try {
+          val doc: Json = parse(jsonString).getOrElse(Json.Null)
+          val citeObj:Vector[CiteObject] = vectorOfCiteObjects(doc)
+          citeObj 
+        } catch {
+          case e:Exception =>  throw new CiteException(s"${e}")
+        }
+      }
+
+      def vectorOfCiteObjects(doc:io.circe.Json):Vector[CiteObject] = {
+        try {
+          if(doc == Json.Null) throw new CiteException(s"Null JSON")
+          // We need a cursor to get stuff
+          val cursor: HCursor = doc.hcursor
+          val vecCiteObjJson = cursor.downField("citeObjects").as[List[Json]]
+          val vco:Vector[CiteObject] = {
+            vecCiteObjJson match {
+              case Right(v) => v.map(co => citeObject(co)).toVector
+              case Left(er) => throw new CiteException(s"Unable to make vector of CiteObjects: ${er}")
+            } 
+          }
+          vco
+        } catch {
+          case e:Exception =>  throw new CiteException(s"${e}")
+        }
+      }
   }
 
 }

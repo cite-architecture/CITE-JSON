@@ -125,7 +125,16 @@ class CiteObjJsonSpec extends FlatSpec {
     assert(co.propertyList.size == 3)
   }
 
-  it should "create a vector of CiteObjects" in pending
+  it should "create a vector of CiteObjects" in {
+    val cjo:CiteObjJson = CiteObjJson()
+    assert(cjo.exists)
+    val vco:Vector[CiteObject] = cjo.vectorOfCiteObjects(someCiteObjectsString)
+    assert(vco.size == 3)
+    assert(vco(0).urn == Cite2Urn("urn:cite2:hmt:e4.v1:1r"))
+    assert(vco(0).label == "Escorial Omega 1.12 folio 1r")
+    assert(vco(2).urn == Cite2Urn("urn:cite2:hmt:e4.v1:2r"))
+    assert(vco(0).propertyList.size == 3)
+  }
 
 
 }
