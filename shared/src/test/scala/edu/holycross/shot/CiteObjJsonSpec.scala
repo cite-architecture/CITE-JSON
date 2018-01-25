@@ -8,17 +8,38 @@ import org.scalatest.FlatSpec
 
 class CiteObjJsonSpec extends FlatSpec {
 
-  val citePropertyDefJson:String = """
-  {"citePropertyDef":{"urn":"urn:cite2:hmt:msA.v1.urn:","label":"URN","propertyType":"Cite2UrnType","vocabularyList":""}}
+
+  val propertyValueString_NumericType:String = """
+ {"propertyDefLabel":"Page sequence","propertyDefVocab":"","propertyType":"NumericType","propertyUrn":"urn:cite2:hmt:msA.v1.sequence:1r","propertyValue":"1.0"}
   """
 
-  val citeCollectionDefJson:String = """
- {"citeCollectionDef":{"citeCollectionInfo":{"orderingProperty":"urn:cite2:hmt:e4.v1.sequence:","labellingProperty":"urn:cite2:hmt:e4.v1.label:","license":"CC-attribution-share-alike","urn":"urn:cite2:hmt:e4.v1:","collectionLabel":"Pages of the Omega 1.12 manuscript"}},"citeProperties":{"citeCollectionPropertyDefs":[{"citePropertyDef":{"urn":"urn:cite2:hmt:e4.v1.urn:","label":"URN","propertyType":"Cite2UrnType","vocabularyList":""}},{"citePropertyDef":{"urn":"urn:cite2:hmt:e4.v1.label:","label":"Label","propertyType":"StringType","vocabularyList":""}},{"citePropertyDef":{"urn":"urn:cite2:hmt:e4.v1.rv:","label":"Recto or Verso","propertyType":"ControlledVocabType","vocabularyList":"recto,verso"}},{"citePropertyDef":{"urn":"urn:cite2:hmt:e4.v1.sequence:","label":"Page sequence","propertyType":"NumericType","vocabularyList":""}},{"citePropertyDef":{"urn":"urn:cite2:hmt:e4.v1.fakeboolean:","label":"Boolean for Testing","propertyType":"BooleanType","vocabularyList":""}}]}} 
+  val propertyValueString_BooleanType:String = """
+  {"propertyDefUrn":"urn:cite2:hmt:e4.v1.fakeboolean:","propertyDefLabel":"Boolean for Testing","propertyDefVocab":"","propertyType":"BooleanType","propertyUrn":"urn:cite2:hmt:e4.v1.fakeboolean:1r","propertyValue":"true"}
   """
 
-  val vectorOfCiteCollectionDefsJson:String = """
-  {"citeCollectionDefs":[{"citeCollectionDef":{"citeCollectionInfo":{"orderingProperty":"urn:cite2:hmt:msA.v1.sequence:","labellingProperty":"urn:cite2:hmt:msA.v1.label:","license":"CC-attribution-share-alike","urn":"urn:cite2:hmt:msA.v1:","collectionLabel":"Pages of the Venetus A manuscript"}},"citeProperties":{"citeCollectionPropertyDefs":[{"citePropertyDef":{"urn":"urn:cite2:hmt:msA.v1.urn:","label":"URN","propertyType":"Cite2UrnType","vocabularyList":""}},{"citePropertyDef":{"urn":"urn:cite2:hmt:msA.v1.label:","label":"Label","propertyType":"StringType","vocabularyList":""}},{"citePropertyDef":{"urn":"urn:cite2:hmt:msA.v1.siglum:","label":"Manuscript siglum","propertyType":"StringType","vocabularyList":""}},{"citePropertyDef":{"urn":"urn:cite2:hmt:msA.v1.sequence:","label":"Page sequence","propertyType":"NumericType","vocabularyList":""}},{"citePropertyDef":{"urn":"urn:cite2:hmt:msA.v1.rv:","label":"Recto or Verso","propertyType":"ControlledVocabType","vocabularyList":"recto,verso"}},{"citePropertyDef":{"urn":"urn:cite2:hmt:msA.v1.codex:","label":"Codex URN","propertyType":"Cite2UrnType","vocabularyList":""}},{"citePropertyDef":{"urn":"urn:cite2:hmt:msA.v1.text:","label":"Text","propertyType":"CtsUrnType","vocabularyList":""}},{"citePropertyDef":{"urn":"urn:cite2:hmt:msA.v1.image:","label":"Image","propertyType":"Cite2UrnType","vocabularyList":""}},{"citePropertyDef":{"urn":"urn:cite2:hmt:msA.v1.imageROI:","label":"ImageROI","propertyType":"Cite2UrnType","vocabularyList":""}}]}},{"citeCollectionDef":{"citeCollectionInfo":{"orderingProperty":"urn:cite2:hmt:e4.v1.sequence:","labellingProperty":"urn:cite2:hmt:e4.v1.label:","license":"CC-attribution-share-alike","urn":"urn:cite2:hmt:e4.v1:","collectionLabel":"Pages of the Omega 1.12 manuscript"}},"citeProperties":{"citeCollectionPropertyDefs":[{"citePropertyDef":{"urn":"urn:cite2:hmt:e4.v1.urn:","label":"URN","propertyType":"Cite2UrnType","vocabularyList":""}},{"citePropertyDef":{"urn":"urn:cite2:hmt:e4.v1.label:","label":"Label","propertyType":"StringType","vocabularyList":""}},{"citePropertyDef":{"urn":"urn:cite2:hmt:e4.v1.rv:","label":"Recto or Verso","propertyType":"ControlledVocabType","vocabularyList":"recto,verso"}},{"citePropertyDef":{"urn":"urn:cite2:hmt:e4.v1.sequence:","label":"Page sequence","propertyType":"NumericType","vocabularyList":""}},{"citePropertyDef":{"urn":"urn:cite2:hmt:e4.v1.fakeboolean:","label":"Boolean for Testing","propertyType":"BooleanType","vocabularyList":""}}]}},{"citeCollectionDef":{"citeCollectionInfo":{"orderingProperty":"","labellingProperty":"urn:cite2:hmt:vaimg.2017a.label:","license":"CC-attribution-share-alike","urn":"urn:cite2:hmt:vaimg.2017a:","collectionLabel":"Images of the Venetus A manuscript"}},"citeProperties":{"citeCollectionPropertyDefs":[{"citePropertyDef":{"urn":"urn:cite2:hmt:vaimg.2017a.urn:","label":"URN","propertyType":"Cite2UrnType","vocabularyList":""}},{"citePropertyDef":{"urn":"urn:cite2:hmt:vaimg.2017a.label:","label":"Label","propertyType":"StringType","vocabularyList":""}},{"citePropertyDef":{"urn":"urn:cite2:hmt:vaimg.2017a.rights:","label":"Rights","propertyType":"StringType","vocabularyList":""}}]}},{"citeCollectionDef":{"citeCollectionInfo":{"orderingProperty":"","labellingProperty":"urn:cite2:hmt:e4img.2017a.label:","license":"CC-attribution-share-alike","urn":"urn:cite2:hmt:e4img.2017a:","collectionLabel":"Images of the Omega 1.12 manuscript"}},"citeProperties":{"citeCollectionPropertyDefs":[{"citePropertyDef":{"urn":"urn:cite2:hmt:e4img.2017a.urn:","label":"URN","propertyType":"Cite2UrnType","vocabularyList":""}},{"citePropertyDef":{"urn":"urn:cite2:hmt:e4img.2017a.label:","label":"Label","propertyType":"StringType","vocabularyList":""}},{"citePropertyDef":{"urn":"urn:cite2:hmt:e4img.2017a.rights:","label":"Rights","propertyType":"StringType","vocabularyList":""}}]}},{"citeCollectionDef":{"citeCollectionInfo":{"orderingProperty":"urn:cite2:fufolio:msChad.2017a.sequence:","labellingProperty":"urn:cite2:fufolio:msChad.2017a.name:","license":"CC-attribution-share-alike","urn":"urn:cite2:fufolio:msChad.2017a:","collectionLabel":"CITE Collection capturing Folio Sides of the St. Chad Manuscript"}},"citeProperties":{"citeCollectionPropertyDefs":[{"citePropertyDef":{"urn":"urn:cite2:fufolio:msChad.2017a.sequence:","label":"Sequence","propertyType":"NumericType","vocabularyList":""}},{"citePropertyDef":{"urn":"urn:cite2:fufolio:msChad.2017a.urn:","label":"URN","propertyType":"Cite2UrnType","vocabularyList":""}},{"citePropertyDef":{"urn":"urn:cite2:fufolio:msChad.2017a.siglum:","label":"Siglum","propertyType":"StringType","vocabularyList":""}},{"citePropertyDef":{"urn":"urn:cite2:fufolio:msChad.2017a.description:","label":"Description","propertyType":"StringType","vocabularyList":""}},{"citePropertyDef":{"urn":"urn:cite2:fufolio:msChad.2017a.rv:","label":"Recto/Verso","propertyType":"ControlledVocabType","vocabularyList":"recto,verso"}},{"citePropertyDef":{"urn":"urn:cite2:fufolio:msChad.2017a.name:","label":"Name","propertyType":"StringType","vocabularyList":""}}]}},{"citeCollectionDef":{"citeCollectionInfo":{"orderingProperty":"","labellingProperty":"urn:cite2:hmt:textblock.2017a.label:","license":"CC 3.0 NC-BY-SA","urn":"urn:cite2:hmt:textblock.2017a:","collectionLabel":"Defined text-blocks on the Venetus A manuscript"}},"citeProperties":{"citeCollectionPropertyDefs":[{"citePropertyDef":{"urn":"urn:cite2:hmt:textblock.2017a.urn:","label":"URN","propertyType":"Cite2UrnType","vocabularyList":""}},{"citePropertyDef":{"urn":"urn:cite2:hmt:textblock.2017a.label:","label":"Label","propertyType":"StringType","vocabularyList":""}},{"citePropertyDef":{"urn":"urn:cite2:hmt:textblock.2017a.folio:","label":"Folio","propertyType":"Cite2UrnType","vocabularyList":""}},{"citePropertyDef":{"urn":"urn:cite2:hmt:textblock.2017a.image:","label":"Image","propertyType":"Cite2UrnType","vocabularyList":""}},{"citePropertyDef":{"urn":"urn:cite2:hmt:textblock.2017a.imageroi:","label":"ImageROI","propertyType":"Cite2UrnType","vocabularyList":""}},{"citePropertyDef":{"urn":"urn:cite2:hmt:textblock.2017a.notes:","label":"Notes","propertyType":"StringType","vocabularyList":""}}]}},{"citeCollectionDef":{"citeCollectionInfo":{"orderingProperty":"","labellingProperty":"urn:cite2:hmt:textblock.testA.label:","license":"CC 3.0 NC-BY-SA","urn":"urn:cite2:hmt:textblock.testA:","collectionLabel":"Defined text-blocks on the Venetus A manuscript"}},"citeProperties":{"citeCollectionPropertyDefs":[{"citePropertyDef":{"urn":"urn:cite2:hmt:textblock.testA.urn:","label":"URN","propertyType":"Cite2UrnType","vocabularyList":""}},{"citePropertyDef":{"urn":"urn:cite2:hmt:textblock.testA.label:","label":"Label","propertyType":"StringType","vocabularyList":""}},{"citePropertyDef":{"urn":"urn:cite2:hmt:textblock.testA.folio:","label":"Folio","propertyType":"Cite2UrnType","vocabularyList":""}},{"citePropertyDef":{"urn":"urn:cite2:hmt:textblock.testA.image:","label":"Image","propertyType":"Cite2UrnType","vocabularyList":""}},{"citePropertyDef":{"urn":"urn:cite2:hmt:textblock.testA.imageroi:","label":"ImageROI","propertyType":"Cite2UrnType","vocabularyList":""}},{"citePropertyDef":{"urn":"urn:cite2:hmt:textblock.testA.notes:","label":"Notes","propertyType":"StringType","vocabularyList":""}}]}},{"citeCollectionDef":{"citeCollectionInfo":{"orderingProperty":"","labellingProperty":"urn:cite2:hmt:textblock.testB.label:","license":"CC 3.0 NC-BY-SA","urn":"urn:cite2:hmt:textblock.testB:","collectionLabel":"Defined text-blocks on the Venetus A manuscript"}},"citeProperties":{"citeCollectionPropertyDefs":[{"citePropertyDef":{"urn":"urn:cite2:hmt:textblock.testB.urn:","label":"URN","propertyType":"Cite2UrnType","vocabularyList":""}},{"citePropertyDef":{"urn":"urn:cite2:hmt:textblock.testB.label:","label":"Label","propertyType":"StringType","vocabularyList":""}},{"citePropertyDef":{"urn":"urn:cite2:hmt:textblock.testB.folio:","label":"Folio","propertyType":"Cite2UrnType","vocabularyList":""}},{"citePropertyDef":{"urn":"urn:cite2:hmt:textblock.testB.image:","label":"Image","propertyType":"Cite2UrnType","vocabularyList":""}},{"citePropertyDef":{"urn":"urn:cite2:hmt:textblock.testB.imageroi:","label":"ImageROI","propertyType":"Cite2UrnType","vocabularyList":""}},{"citePropertyDef":{"urn":"urn:cite2:hmt:textblock.testB.notes:","label":"Notes","propertyType":"StringType","vocabularyList":""}}]}},{"citeCollectionDef":{"citeCollectionInfo":{"orderingProperty":"","labellingProperty":"urn:cite2:cite:datamodels.v1.label:","license":"Public domain","urn":"urn:cite2:cite:datamodels.v1:","collectionLabel":"CITE data models"}},"citeProperties":{"citeCollectionPropertyDefs":[{"citePropertyDef":{"urn":"urn:cite2:cite:datamodels.v1.urn:","label":"Data model","propertyType":"Cite2UrnType","vocabularyList":""}},{"citePropertyDef":{"urn":"urn:cite2:cite:datamodels.v1.label:","label":"Label","propertyType":"StringType","vocabularyList":""}},{"citePropertyDef":{"urn":"urn:cite2:cite:datamodels.v1.description:","label":"Description","propertyType":"StringType","vocabularyList":""}}]}},{"citeCollectionDef":{"citeCollectionInfo":{"orderingProperty":"","labellingProperty":"urn:cite2:hmt:binaryimg.v1.label:","license":"Public domain","urn":"urn:cite2:hmt:binaryimg.v1:","collectionLabel":"Collections of binary images"}},"citeProperties":{"citeCollectionPropertyDefs":[{"citePropertyDef":{"urn":"urn:cite2:hmt:binaryimg.v1.urn:","label":"Binary Image","propertyType":"Cite2UrnType","vocabularyList":""}},{"citePropertyDef":{"urn":"urn:cite2:hmt:binaryimg.v1.label:","label":"Label","propertyType":"StringType","vocabularyList":""}},{"citePropertyDef":{"urn":"urn:cite2:hmt:binaryimg.v1.collection:","label":"Image Collection","propertyType":"Cite2UrnType","vocabularyList":""}},{"citePropertyDef":{"urn":"urn:cite2:hmt:binaryimg.v1.protocol:","label":"Protocol","propertyType":"ControlledVocabType","vocabularyList":"iiif,iipImageString"}},{"citePropertyDef":{"urn":"urn:cite2:hmt:binaryimg.v1.path:","label":"Path on Server","propertyType":"StringType","vocabularyList":""}},{"citePropertyDef":{"urn":"urn:cite2:hmt:binaryimg.v1.url:","label":"Service URN Base","propertyType":"StringType","vocabularyList":""}},{"citePropertyDef":{"urn":"urn:cite2:hmt:binaryimg.v1.rights:","label":"Rights","propertyType":"StringType","vocabularyList":""}}]}}]}
+  val propertyValueString_ControlledVocabType:String = """
+  {"propertyDefUrn":"urn:cite2:hmt:e4.v1.rv:","propertyDefLabel":"Recto or Verso","propertyDefVocab":"recto,verso","propertyType":"ControlledVocabType","propertyUrn":"urn:cite2:hmt:e4.v1.rv:1r","propertyValue":"recto","propertyDefType":"ControlledVocabType"}
   """
+  val propertyValueString_StringType:String = """
+  {"propertyDefUrn":"urn:cite2:hmt:e4.v1.rv:","propertyDefLabel":"Recto or Verso","propertyDefVocab":"","propertyType":"StringType","propertyUrn":"urn:cite2:hmt:e4.v1.rv:1r","propertyValue":"recto","propertyDefType":"StringType"}
+  """
+
+  val propertyValueString_CtsUrnType:String = """
+  {"propertyDefLabel":"Text URN","propertyDefVocab":"","propertyType":"CtsUrnType","propertyUrn":"urn:cite2:hmt:msA.v1.text:1r","propertyValue":"urn:cts:greekLit:tlg0012.tlg001.msA:1.2","propertyDefType":"CtsUrnType"}
+  """
+
+  val propertyValueString_Cite2UrnType:String = """
+  {"propertyDefLabel":"Codex URN","propertyDefVocab":"","propertyType":"Cite2UrnType","propertyUrn":"urn:cite2:hmt:msA.v1.codex:1r","propertyValue":"urn:cite2:hmt:codex:msA","propertyDefType":"Cite2UrnType"}
+  """
+
+  val oneCiteObjectString:String = """
+  {"citeObject":{"urn":"urn:cite2:hmt:e4.v1:1r","label":"Escorial Omega 1.12 folio 1r"},"citePropertyValues":[{"propertyDefUrn":"urn:cite2:hmt:e4.v1.sequence:","propertyDefLabel":"Page sequence","propertyDefVocab":"","propertyType":"NumericType","propertyUrn":"urn:cite2:hmt:e4.v1.sequence:1r","propertyValue":"1.0","propertyDefType":"NumericType"},{"propertyDefUrn":"urn:cite2:hmt:e4.v1.fakeboolean:","propertyDefLabel":"Boolean for Testing","propertyDefVocab":"","propertyType":"BooleanType","propertyUrn":"urn:cite2:hmt:e4.v1.fakeboolean:1r","propertyValue":"true","propertyDefType":"BooleanType"},{"propertyDefUrn":"urn:cite2:hmt:e4.v1.rv:","propertyDefLabel":"Recto or Verso","propertyDefVocab":"recto,verso","propertyType":"ControlledVocabType","propertyUrn":"urn:cite2:hmt:e4.v1.rv:1r","propertyValue":"recto","propertyDefType":"ControlledVocabType"}]}
+  """
+
+  val someCiteObjectsString:String = """
+  {"citeObjects":[{"citeObject":{"urn":"urn:cite2:hmt:e4.v1:1r","label":"Escorial Omega 1.12 folio 1r"},"citePropertyValues":[{"propertyDefUrn":"urn:cite2:hmt:e4.v1.sequence:","propertyDefLabel":"Page sequence","propertyDefVocab":"","propertyType":"NumericType","propertyUrn":"urn:cite2:hmt:e4.v1.sequence:1r","propertyValue":"1.0","propertyDefType":"NumericType"},{"propertyDefUrn":"urn:cite2:hmt:e4.v1.fakeboolean:","propertyDefLabel":"Boolean for Testing","propertyDefVocab":"","propertyType":"BooleanType","propertyUrn":"urn:cite2:hmt:e4.v1.fakeboolean:1r","propertyValue":"true","propertyDefType":"BooleanType"},{"propertyDefUrn":"urn:cite2:hmt:e4.v1.rv:","propertyDefLabel":"Recto or Verso","propertyDefVocab":"recto,verso","propertyType":"ControlledVocabType","propertyUrn":"urn:cite2:hmt:e4.v1.rv:1r","propertyValue":"recto","propertyDefType":"ControlledVocabType"}]},{"citeObject":{"urn":"urn:cite2:hmt:e4.v1:1v","label":"Escorial Omega 1.12 folio 1v"},"citePropertyValues":[{"propertyDefUrn":"urn:cite2:hmt:e4.v1.sequence:","propertyDefLabel":"Page sequence","propertyDefVocab":"","propertyType":"NumericType","propertyUrn":"urn:cite2:hmt:e4.v1.sequence:1v","propertyValue":"2.0","propertyDefType":"NumericType"},{"propertyDefUrn":"urn:cite2:hmt:e4.v1.fakeboolean:","propertyDefLabel":"Boolean for Testing","propertyDefVocab":"","propertyType":"BooleanType","propertyUrn":"urn:cite2:hmt:e4.v1.fakeboolean:1v","propertyValue":"true","propertyDefType":"BooleanType"},{"propertyDefUrn":"urn:cite2:hmt:e4.v1.rv:","propertyDefLabel":"Recto or Verso","propertyDefVocab":"recto,verso","propertyType":"ControlledVocabType","propertyUrn":"urn:cite2:hmt:e4.v1.rv:1v","propertyValue":"verso","propertyDefType":"ControlledVocabType"}]},{"citeObject":{"urn":"urn:cite2:hmt:e4.v1:2r","label":"Escorial Omega 1.12 folio 2r"},"citePropertyValues":[{"propertyDefUrn":"urn:cite2:hmt:e4.v1.sequence:","propertyDefLabel":"Page sequence","propertyDefVocab":"","propertyType":"NumericType","propertyUrn":"urn:cite2:hmt:e4.v1.sequence:2r","propertyValue":"3.0","propertyDefType":"NumericType"},{"propertyDefUrn":"urn:cite2:hmt:e4.v1.fakeboolean:","propertyDefLabel":"Boolean for Testing","propertyDefVocab":"","propertyType":"BooleanType","propertyUrn":"urn:cite2:hmt:e4.v1.fakeboolean:2r","propertyValue":"false","propertyDefType":"BooleanType"},{"propertyDefUrn":"urn:cite2:hmt:e4.v1.rv:","propertyDefLabel":"Recto or Verso","propertyDefVocab":"recto,verso","propertyType":"ControlledVocabType","propertyUrn":"urn:cite2:hmt:e4.v1.rv:2r","propertyValue":"recto","propertyDefType":"ControlledVocabType"}]}]}
+  """
+
 
   "The CiteObjJson Library" should "compile" in {
     val cjo:CiteObjJson = CiteObjJson()
@@ -43,38 +64,68 @@ class CiteObjJsonSpec extends FlatSpec {
     }
   }
 
-  it should "be able to set a CitePropertyType" in {
-    val cpt:CitePropertyType = CtsUrnType
-    assert (cpt.toString == "CtsUrnType" )
-  }
-
-  it should "be able to parse strings to boolean values" in {
+  it should "create a CitePropertyImplementation of CtsUrnType" in {
     val cjo:CiteObjJson = CiteObjJson()
     assert(cjo.exists)
-    assert(cjo.parseBoolean("true") == true)
-    assert(cjo.parseBoolean("false") == false)
+    val cpi:CitePropertyImplementation = cjo.citePropertyImplementation(propertyValueString_CtsUrnType)
+    assert(cpi.urn == Cite2Urn("urn:cite2:hmt:msA.v1.text:1r"))
+    assert(cpi.propertyDef.propertyType == CtsUrnType)
   }
 
-  it should "parse a CitePropertyDefinition" in {
+  it should "create a CitePropertyImplementation of Cite2UrnType" in {
     val cjo:CiteObjJson = CiteObjJson()
     assert(cjo.exists)
-    val cpd:CitePropertyDef = cjo.citePropertyDef(citePropertyDefJson)
-    assert(cpd.urn == Cite2Urn("urn:cite2:hmt:msA.v1.urn:"))
+    val cpi:CitePropertyImplementation = cjo.citePropertyImplementation(propertyValueString_Cite2UrnType)
+    assert(cpi.urn == Cite2Urn("urn:cite2:hmt:msA.v1.codex:1r"))
+    assert(cpi.propertyDef.propertyType == Cite2UrnType)
   }
 
-  it should "parse a CiteCollection Definition" in {
+  it should "create a CitePropertyImplementation of StringType" in {
     val cjo:CiteObjJson = CiteObjJson()
     assert(cjo.exists)
-    val ccd:CiteCollectionDef = cjo.citeCollectionDef(citeCollectionDefJson)
-    assert(ccd.urn == Cite2Urn("urn:cite2:hmt:e4.v1:"))
+    val cpi:CitePropertyImplementation = cjo.citePropertyImplementation(propertyValueString_StringType)
+    assert(cpi.urn == Cite2Urn("urn:cite2:hmt:e4.v1.rv:1r"))
+    assert(cpi.propertyDef.propertyType == StringType)
   }
 
-  it should "parse a vector of CiteCollectionDefinitions into  CiteCatalog" in {
+  it should "create a CitePropertyImplementation of NumericType" in { 
     val cjo:CiteObjJson = CiteObjJson()
     assert(cjo.exists)
-    val citecat:CiteCatalog = cjo.citeCatalog(vectorOfCiteCollectionDefsJson)
-    assert(citecat.collections.size == 10)
+    val cpi:CitePropertyImplementation = cjo.citePropertyImplementation(propertyValueString_NumericType)
+    assert(cpi.urn == Cite2Urn("urn:cite2:hmt:msA.v1.sequence:1r"))
+    assert(cpi.propertyDef.propertyType == NumericType)
+    assert(cpi.propertyValue == 1)
   }
+
+  it should "create a CitePropertyImplementation of BooleanType" in {
+    val cjo:CiteObjJson = CiteObjJson()
+    assert(cjo.exists)
+    val cpi:CitePropertyImplementation = cjo.citePropertyImplementation(propertyValueString_BooleanType)
+    assert(cpi.urn == Cite2Urn("urn:cite2:hmt:e4.v1.fakeboolean:1r"))
+    assert(cpi.propertyDef.propertyType == BooleanType)
+    assert(cpi.propertyValue == true)
+  }
+
+  it should "create a CitePropertyImplementation of ControlledVocabType" in { 
+    val cjo:CiteObjJson = CiteObjJson()
+    assert(cjo.exists)
+    val cpi:CitePropertyImplementation = cjo.citePropertyImplementation(propertyValueString_ControlledVocabType)
+    assert(cpi.urn == Cite2Urn("urn:cite2:hmt:e4.v1.rv:1r"))
+    assert(cpi.propertyDef.propertyType == ControlledVocabType)
+    assert(cpi.propertyValue == "recto")
+  }
+
+
+  it should "create a CiteObject" in {
+    val cjo:CiteObjJson = CiteObjJson()
+    assert(cjo.exists)
+    val co:CiteObject = cjo.citeObject(oneCiteObjectString)
+    assert(co.urn == Cite2Urn("urn:cite2:hmt:e4.v1:1r"))
+    assert(co.label == "Escorial Omega 1.12 folio 1r")
+    assert(co.propertyList.size == 3)
+  }
+
+  it should "create a vector of CiteObjects" in pending
 
 
 }

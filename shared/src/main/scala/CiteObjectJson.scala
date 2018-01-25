@@ -165,7 +165,7 @@ package citejson {
                   case _ => throw new CiteException(s"${s} is not a CitePropertyType.")
                 } 
               }
-              case Left(er) => throw new CiteException(s"Unable to make PropertyLabel: ${er}")
+              case Left(er) => throw new CiteException(s"Unable to make PropertyType: ${er}")
             }
           }
 
@@ -181,7 +181,7 @@ package citejson {
                   }
                 }
               } 
-              case Left(er) => throw new CiteException(s"Unable to make PropertyLabel: ${er}")
+              case Left(er) => throw new CiteException(s"Unable to make Vocabulary List: ${er}")
             }          
           }
 
@@ -228,6 +228,159 @@ package citejson {
         }
       }
 
+      def citePropertyImplementation(jsonString:String):CitePropertyImplementation = {
+        try {
+          val doc: Json = parse(jsonString).getOrElse(Json.Null)
+          val citePropImpl:CitePropertyImplementation = citePropertyImplementation(doc)
+          citePropImpl 
+        } catch {
+          case e:Exception =>  throw new CiteException(s"${e}")
+        }
+      }
+
+      def citePropertyImplementation(doc:io.circe.Json):CitePropertyImplementation = {
+        try {
+          if(doc == Json.Null) throw new CiteException(s"Null JSON")
+          // We need a cursor to get stuff
+          val cursor: HCursor = doc.hcursor
+
+          // Get URN
+          val propDefUrnString = cursor.downField("propertyUrn").as[String]
+          val propUrn:Cite2Urn = {
+            propDefUrnString match {
+              case Right(s) => Cite2Urn(s)
+              case Left(er) => throw new CiteException(s"Unable to make URN: ${er}")
+            }          
+          }
+          val propDefUrn:Cite2Urn = propUrn.dropSelector
+
+          // Get Label
+          val propDefLabelString = cursor.downField("propertyDefLabel").as[String]
+          val propDefLabel:String = {
+            propDefLabelString match {
+              case Right(s) => s
+              case Left(er) => throw new CiteException(s"Unable to make Property Definition Label: ${er}")
+            }          
+          }
+
+          // Get Property Type
+          val propDefTypeString = cursor.downField("propertyType").as[String]
+          val propType:CitePropertyType = {
+            propDefTypeString match {
+              case Right(s) => {
+                s match {
+                  case "CtsUrnType" => CtsUrnType 
+                  case "Cite2UrnType" => Cite2UrnType 
+                  case "NumericType" => NumericType 
+                  case "BooleanType" => BooleanType 
+                  case "StringType" => StringType 
+                  case "ControlledVocabType" => ControlledVocabType 
+                  case _ => throw new CiteException(s"${s} is not a CitePropertyType.")
+                } 
+              }
+              case Left(er) => throw new CiteException(s"Unable to make Property Type: ${er}")
+            }
+          }
+
+           // Get Controlled Vocabulary
+          val contVocabString = cursor.downField("propertyDefVocab").as[String]
+          val controlledVocab:Vector[String] = {
+            contVocabString match {
+              case Right(s) => {
+                s match {
+                  case "" => Vector.empty
+                  case _ => {
+                    s.split(",").toVector
+                  }
+                }
+              } 
+              case Left(er) => throw new CiteException(s"Unable to make Vocabulary List: ${er}")
+            }          
+          }
+
+          // Make Cite Property Definition
+          val citePropDef:CitePropertyDef = CitePropertyDef(propDefUrn,propDefLabel,propType,controlledVocab)
+
+          // We already have the URN, so…
+          // … just get value!
+          val propertyValueString = cursor.downField("propertyValue").as[String]
+          val propertyValue:Any = {
+             propertyValueString match {
+              case Right(s) => {
+                propType match {
+                  case CtsUrnType => CtsUrn(s)
+                  case Cite2UrnType => Cite2Urn(s)
+                  case NumericType => s.toDouble
+                  case BooleanType => s.toBoolean
+                  case StringType => s
+                  case ControlledVocabType => s
+                  case _ => throw new CiteException(s"${propType} is not a CitePropertyType.")
+                } 
+              }
+              case Left(er) => throw new CiteException(s"Unable to make Property Value: ${er}")
+            }
+          }
+          val newCiteProperty:CitePropertyImplementation = CitePropertyImplementation(propUrn, citePropDef, propertyValue)
+
+          newCiteProperty
+
+        } catch {
+          case e:Exception =>  throw new CiteException(s"${e}")
+        }
+      }
+
+      def citeObject(jsonString:String):CiteObject = {
+        try {
+          val doc: Json = parse(jsonString).getOrElse(Json.Null)
+          val citeObj:CiteObject = citeObject(doc)
+          citeObj 
+        } catch {
+          case e:Exception =>  throw new CiteException(s"${e}")
+        }
+      }
+
+      def citeObject(doc:io.circe.Json):CiteObject = {
+        try {
+          if(doc == Json.Null) throw new CiteException(s"Null JSON")
+          // We need a cursor to get stuff
+          val cursor: HCursor = doc.hcursor
+
+          // Get URN
+          val urnStr = cursor.downField("citeObject").downField("urn").as[String]
+          val urn:Cite2Urn = {
+            urnStr match {
+              case Right(s) => Cite2Urn(s)
+              case Left(er) => throw new CiteException(s"Unable to make CiteObject urn: ${er}")
+            }          
+          }
+
+          // Get Label
+          val labelStr = cursor.downField("citeObject").downField("label").as[String]
+          val label:String = {
+            labelStr match {
+              case Right(s) => s
+              case Left(er) => throw new CiteException(s"Unable to make CiteObject label: ${er}")
+            }          
+          }
+
+          // Get Vector of CitePropertyImplementations
+          val propVecJson = cursor.downField("citePropertyValues").as[List[Json]]
+          val propVec:Vector[CitePropertyImplementation] = {
+            propVecJson match {
+              case Right(pv) => {
+                pv.map(p => citePropertyImplementation(p)).toVector
+              }
+              case Left(er) => throw new CiteException(s"Unable to make vector of CitePropertyImplementations: ${er}")
+            }
+          }
+
+          // Construct CiteObject & Return
+          val co:CiteObject = CiteObject(urn,label,propVec)
+          co
+        } catch {
+          case e:Exception =>  throw new CiteException(s"${e}")
+        }
+      }
   }
 
 }
