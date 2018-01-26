@@ -2,6 +2,7 @@ package edu.holycross.shot.citejson
 
 import edu.holycross.shot.cite._
 import edu.holycross.shot.citeobj._
+import edu.holycross.shot.scm._
 import cats.syntax.either._
 import io.circe._, io.circe.generic.auto._, io.circe.parser._, io.circe.syntax._
 import org.scalatest.FlatSpec

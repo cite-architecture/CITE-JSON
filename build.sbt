@@ -29,7 +29,9 @@ lazy val crossed = crossProject.in(file(".")).
         "edu.holycross.shot" %% "citeobj" % "5.0.1-m2" from "file:///cite/scala/unmanaged_jars/citeobj_2.12-5.2.0.jar",
         "edu.holycross.shot" %%% "citeobj" % "5.0.1-m2" from "file:///cite/scala/unmanaged_jars/citeobj_sjs0.6_2.12-5.2.0.jar",
         "edu.holycross.shot" %%% "citerelations" % "2.0.1",
-        "edu.holycross.shot" %%% "ohco2" % "10.4.0"
+        "edu.holycross.shot" %%% "ohco2" % "10.4.0",
+        "edu.holycross.shot" %% "scm" % "5.1.9" from "file:///cite/scala/unmanaged_jars/scm_2.12-5.1.9.jar",
+        "edu.holycross.shot" %%% "scm" % "5.1.9" from "file:///cite/scala/unmanaged_jars/scm_sjs0.6_2.12-5.1.9.jar"
       ),
       libraryDependencies ++= Seq(
         "io.circe" %%% "circe-core",

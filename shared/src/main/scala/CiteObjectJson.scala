@@ -2,6 +2,7 @@ package edu.holycross.shot
 import scala.scalajs.js
 import scala.scalajs.js.annotation._
 import edu.holycross.shot.cite._
+import edu.holycross.shot.scm._
 import edu.holycross.shot.citeobj._
 import io.circe._, io.circe.generic.auto._, io.circe.parser._, io.circe.syntax._
 import io.circe.parser.decode
@@ -405,6 +406,90 @@ package citejson {
             } 
           }
           vco
+        } catch {
+          case e:Exception =>  throw new CiteException(s"${e}")
+        }
+      }
+
+     def dataModel(jsonString:String):DataModel = {
+        try {
+          val doc: Json = parse(jsonString).getOrElse(Json.Null)
+          val dm:DataModel = dataModel(doc)
+          dm 
+        } catch {
+          case e:Exception =>  throw new CiteException(s"${e}")
+        }
+      }
+
+      def dataModel(doc:io.circe.Json):DataModel = {
+        try {
+          if(doc == Json.Null) throw new CiteException(s"Null JSON")
+          // We need a cursor to get stuff
+          val cursor: HCursor = doc.hcursor
+
+          // get collection
+          val collJson = cursor.downField("dataModel").downField("collection").as[String]
+          val coll:Cite2Urn = {
+            collJson match {
+              case Right(c) => Cite2Urn(c)
+              case Left(er) => throw new CiteException(s"Unable to make collection urn: ${er}")
+            }
+          }
+          // get description
+          val descJson = cursor.downField("dataModel").downField("description").as[String]
+          val desc:String = {
+            descJson match {
+              case Right(d) => d
+              case Left(er) => throw new CiteException(s"Unable to make description: ${er}")
+            }
+          }
+          // get label
+          val labelJson = cursor.downField("dataModel").downField("label").as[String]
+          val label:String = {
+            labelJson match {
+              case Right(l) => l
+              case Left(er) => throw new CiteException(s"Unable to make label: ${er}")
+            }
+          }
+            // get model
+          val modelJson = cursor.downField("dataModel").downField("model").as[String]
+          val model:Cite2Urn = {
+            modelJson match {
+              case Right(m) => Cite2Urn(m)
+              case Left(er) => throw new CiteException(s"Unable to make model urn: ${er}")
+            }
+          }
+
+          val dm:DataModel = DataModel(coll,model,label,desc)
+          dm
+        } catch {
+          case e:Exception =>  throw new CiteException(s"${e}")
+        }
+      }
+
+     def dataModels(jsonString:String):Vector[DataModel] = {
+        try {
+          val doc: Json = parse(jsonString).getOrElse(Json.Null)
+          val dms:Vector[DataModel] = dataModels(doc)
+          dms 
+        } catch {
+          case e:Exception =>  throw new CiteException(s"${e}")
+        }
+      }
+
+      def dataModels(doc:io.circe.Json):Vector[DataModel] = {
+        try {
+          if(doc == Json.Null) throw new CiteException(s"Null JSON")
+          // We need a cursor to get stuff
+          val cursor: HCursor = doc.hcursor
+          val vecDMJson = cursor.downField("dataModels").as[List[Json]]
+          val vecDM:Vector[DataModel] = {
+              vecDMJson match {
+                case Right(vdm) => vdm.map( dm => dataModel(dm)).toVector
+                case Left(er) => throw new CiteException(s"Unable to make vector of DataModels: ${er}")
+              }
+          } 
+          vecDM
         } catch {
           case e:Exception =>  throw new CiteException(s"${e}")
         }
