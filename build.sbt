@@ -1,8 +1,10 @@
 name := "Cross-compiled CITE JSON library"
 
-crossScalaVersions := Seq("2.11.8", "2.12.3")
+//crossScalaVersions in ThisBuild := Seq("2.10.6","2.11.8", "2.12.4")
+crossScalaVersions in ThisBuild := Seq( "2.12.4")
+scalaVersion := (crossScalaVersions in ThisBuild).value.last
 
-scalaVersion := "2.12.3"
+
 
 lazy val root = project.in(file(".")).
     aggregate(crossedJVM, crossedJS).
@@ -25,13 +27,12 @@ lazy val crossed = crossProject.in(file(".")).
       libraryDependencies ++= Seq(
         "org.scala-js" %% "scalajs-stubs" % scalaJSVersion % "provided",
         "org.scalatest" %%% "scalatest" % "3.0.1" % "test",
-        "edu.holycross.shot.cite" %%% "xcite" % "2.7.1",
-        "edu.holycross.shot" %% "citeobj" % "5.0.1-m2" from "file:///cite/scala/unmanaged_jars/citeobj_2.12-5.2.0.jar",
-        "edu.holycross.shot" %%% "citeobj" % "5.0.1-m2" from "file:///cite/scala/unmanaged_jars/citeobj_sjs0.6_2.12-5.2.0.jar",
+        "edu.holycross.shot.cite" %%% "xcite" % "3.2.2",
+        "edu.holycross.shot" %%% "citeobj" % "6.0.0",
+
         "edu.holycross.shot" %%% "citerelations" % "2.0.1",
-        "edu.holycross.shot" %%% "ohco2" % "10.4.0",
-        "edu.holycross.shot" %% "scm" % "5.1.9" from "file:///cite/scala/unmanaged_jars/scm_2.12-5.1.9.jar",
-        "edu.holycross.shot" %%% "scm" % "5.1.9" from "file:///cite/scala/unmanaged_jars/scm_sjs0.6_2.12-5.1.9.jar"
+        "edu.holycross.shot" %%% "ohco2" % "10.4.3",
+        "edu.holycross.shot" %%% "scm" % "5.3.0"
       ),
       libraryDependencies ++= Seq(
         "io.circe" %%% "circe-core",
