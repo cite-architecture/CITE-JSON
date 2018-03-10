@@ -1,10 +1,8 @@
 name := "Cross-compiled CITE JSON library"
 
-//crossScalaVersions in ThisBuild := Seq("2.10.6","2.11.8", "2.12.4")
+// Depends on libraries that only work under 2.12?
 crossScalaVersions in ThisBuild := Seq( "2.12.4")
 scalaVersion := (crossScalaVersions in ThisBuild).value.last
-
-
 
 lazy val root = project.in(file(".")).
     aggregate(crossedJVM, crossedJS).
@@ -20,19 +18,20 @@ lazy val crossed = crossProject.in(file(".")).
     settings(
       name := "citejson",
       organization := "edu.holycross.shot",
-      version := "1.0.0",
+      version := "1.1.0",
       licenses += ("GPL-3.0",url("https://opensource.org/licenses/gpl-3.0.html")),
       resolvers += Resolver.jcenterRepo,
       resolvers += Resolver.bintrayRepo("neelsmith", "maven"),
       libraryDependencies ++= Seq(
         "org.scala-js" %% "scalajs-stubs" % scalaJSVersion % "provided",
         "org.scalatest" %%% "scalatest" % "3.0.1" % "test",
-        "edu.holycross.shot.cite" %%% "xcite" % "3.2.2",
-        "edu.holycross.shot" %%% "citeobj" % "6.0.0",
 
-        "edu.holycross.shot" %%% "citerelations" % "2.0.1",
-        "edu.holycross.shot" %%% "ohco2" % "10.4.3",
-        "edu.holycross.shot" %%% "scm" % "5.3.0"
+        "edu.holycross.shot.cite" %%% "xcite" % "3.2.2",
+        "edu.holycross.shot" %%% "citeobj" % "6.1.0",
+
+        "edu.holycross.shot" %%% "citerelations" % "2.0.2",
+        "edu.holycross.shot" %%% "ohco2" % "10.5.3",
+        "edu.holycross.shot" %%% "scm" % "5.3.1"
       ),
       libraryDependencies ++= Seq(
         "io.circe" %%% "circe-core",
@@ -42,12 +41,13 @@ lazy val crossed = crossProject.in(file(".")).
       ).map(_ % circeVersion)
     ).
     jvmSettings(
-
+      tutTargetDirectory := file("docs"),
+      tutSourceDirectory := file("shared/src/main/tut")
     ).
     jsSettings(
       skip in packageJSDependencies := false,
       scalaJSUseMainModuleInitializer in Compile := true
     )
 
-lazy val crossedJVM = crossed.jvm
-lazy val crossedJS = crossed.js.enablePlugins(ScalaJSPlugin)
+lazy val crossedJVM = crossed.jvm.enablePlugins(TutPlugin)
+lazy val crossedJS = crossed.js
