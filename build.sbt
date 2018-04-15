@@ -18,7 +18,7 @@ lazy val crossed = crossProject.in(file(".")).
     settings(
       name := "citejson",
       organization := "edu.holycross.shot",
-      version := "1.1.0",
+      version := "1.1.1",
       licenses += ("GPL-3.0",url("https://opensource.org/licenses/gpl-3.0.html")),
       resolvers += Resolver.jcenterRepo,
       resolvers += Resolver.bintrayRepo("neelsmith", "maven"),

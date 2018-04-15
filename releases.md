@@ -1,5 +1,6 @@
 # citejson: release notes
 
+**1.1.1**:  update dependencies
 
 **1.1.0**:  update dependencies, add skelly-compliant cross-building functionality
 
