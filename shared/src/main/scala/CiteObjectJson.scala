@@ -30,6 +30,42 @@ package citejson {
         b
       }
 
+      def parseLibraryInfo(jsonString:String):Map[String,String] = {
+        try {
+          val doc: Json = parse(jsonString).getOrElse(Json.Null)
+          val cursor: HCursor = doc.hcursor
+          val urnString = {
+            cursor.get[String]("urn") match { 
+                case Right(s) => {
+                  val testUrn = Cite2Urn(s)
+                  s
+                }
+                case Left(er) => throw new CiteException(s"Unable to get URN: ${er}")
+            }  
+          }
+          val nameString = {
+            cursor.get[String]("name") match {
+                case Right(s) => s
+                case Left(er) => throw new CiteException(s"Unable to get Name: ${er}")
+            }  
+          }
+          val licenseString = {
+            cursor.get[String]("license") match {
+              case Right(s) => s
+              case Left(er) => throw new CiteException(s"Unable to get License: ${er}")
+            }
+          }
+          val returnMap:Map[String,String] = Map(
+              "name" -> nameString,
+              "urn" -> urnString,
+              "license" -> licenseString
+          )
+          returnMap
+        } catch {
+          case e:Exception =>  throw new CiteException(s"${e}")
+        }
+      }
+
       def citeCollectionDef(jsonString:String):CiteCollectionDef = {
         try {
           val doc: Json = parse(jsonString).getOrElse(Json.Null)

@@ -9,6 +9,8 @@ import org.scalatest.FlatSpec
 
 class CiteCollectionJsonSpec extends FlatSpec {
 
+  val citeLibraryMetadataJson:String = """{"name":"scs-akka test library","urn":"urn:cite2:cex:demo.2017_1:servicetest","license":"CC Share Alike.  For details, see more info."}"""
+
   val citePropertyDefJson:String = """
   {"citePropertyDef":{"urn":"urn:cite2:hmt:msA.v1.urn:","label":"URN","propertyType":"Cite2UrnType","vocabularyList":""}}
   """
@@ -88,6 +90,15 @@ class CiteCollectionJsonSpec extends FlatSpec {
     assert(dataModelsVec.size == 2)
     assert(dataModelsVec(0).collection == Cite2Urn("urn:cite2:hmt:vaimg.2017a:"))
     assert(dataModelsVec(1).model == Cite2Urn("urn:cite2:cite:datamodels.v1:binaryimg"))
+  }
+
+  it should "parse a Json expression of a CiteLibrary's metadata" in {
+    val cjo:CiteObjJson = CiteObjJson()
+    assert(cjo.exists)
+    val libMD:Map[String,String] = cjo.parseLibraryInfo(citeLibraryMetadataJson)
+    assert(libMD("urn") == "urn:cite2:cex:demo.2017_1:servicetest")
+    assert(libMD("name") == "scs-akka test library")
+    assert(libMD("license") == "CC Share Alike.  For details, see more info.")
   }
 
 

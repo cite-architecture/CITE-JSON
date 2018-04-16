@@ -1,5 +1,7 @@
 # citejson: release notes
 
+**1.1.2**:  Added method for parsing a JSON expression of a Cite Library's metadata (urn, name, license).
+
 **1.1.1**:  update dependencies
 
 **1.1.0**:  update dependencies, add skelly-compliant cross-building functionality
