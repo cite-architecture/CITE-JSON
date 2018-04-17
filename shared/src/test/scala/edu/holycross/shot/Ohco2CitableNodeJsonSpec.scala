@@ -34,6 +34,15 @@ class Ohco2CitableNodeJsonSpec extends FlatSpec {
     assert(vcn(4).text == "οἰωνοῖσί τε πᾶσι, Διὸς δ᾽ ἐτελείετο βουλή,")
   }
 
+  it should "parse a single ctsUrnString" in {
+    val urnString:String = """
+{"urnString":"urn:cts:greekLit:tlg0012.tlg001.perseus_grc2:1.1"} """
+    val cjo:Ohco2Json = Ohco2Json()
+    assert(cjo.exists)
+    val cu:CtsUrn = cjo.o2CtsUrnString(urnString) 
+    assert(cu == CtsUrn("urn:cts:greekLit:tlg0012.tlg001.perseus_grc2:1.1"))
+  }
+
 
 
 

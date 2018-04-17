@@ -1,6 +1,8 @@
 # citejson: release notes
 
-**1.1.2**:  Moved method for parsing a JSON expression of a Cite Library's metadata (urn, name, license) into CiteLibraryJson class.
+**1.1.4**:  Added method for parsing a single CtsUrnString.
+
+**1.1.3**:  Moved method for parsing a JSON expression of a Cite Library's metadata (urn, name, license) into CiteLibraryJson class.
 
 **1.1.2**:  Added method for parsing a JSON expression of a Cite Library's metadata (urn, name, license).
 

@@ -19,6 +19,41 @@ package citejson {
       	true
       }
 
+      /** Given a JSON string, construct a single CtsUrn
+      * @param jsonString
+      */
+      def o2CtsUrnString(jsonString:String):CtsUrn = {
+        try {
+          val doc: Json = parse(jsonString).getOrElse(Json.Null)
+          val ctsUrn:CtsUrn = o2CtsUrnString(doc)
+          ctsUrn
+        } catch {
+          case e:Exception =>  throw new CiteJsonException(s"Failed with string param ${jsonString} :: ${e}")
+        }
+      }
+
+       /** Given a JSON string, construct a single CtsUrn
+      * @param jsonString
+      */
+      def o2CtsUrnString(doc:io.circe.Json):CtsUrn = {
+        try {
+          if(doc == Json.Null) throw new CiteJsonException(s"Null JSON: ${doc}")
+          // We need a cursor to get stuff
+          val cursor: HCursor = doc.hcursor
+         // Get URN
+          val urnString = cursor.get[String]("urnString")
+          val urn:CtsUrn = { 
+            urnString match {
+              case Right(s) => CtsUrn(s)
+              case Left(er) => throw new CiteJsonException(s"Unable to make URN: ${er}")
+            }
+          }
+          urn 
+        } catch {
+          case e:Exception =>  throw new CiteJsonException(s"${e}")
+        }
+      }
+
       /** Given a JSON string, construct a single Ohco2 CatalogEntry
       * @param jsonString
       */
