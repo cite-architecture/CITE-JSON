@@ -28,7 +28,7 @@ package citejson {
           val catEntry:CatalogEntry = o2CatalogEntry(doc)
           catEntry
         } catch {
-          case e:Exception =>  throw new CiteException(s"${e}")
+          case e:Exception =>  throw new CiteJsonException(s"${e}")
         }
       }
 
@@ -37,7 +37,7 @@ package citejson {
       */
       def o2CatalogEntry(doc:io.circe.Json):CatalogEntry = {
         try {
-          if(doc == Json.Null) throw new CiteException(s"Null JSON")
+          if(doc == Json.Null) throw new CiteJsonException(s"Null JSON")
           // We need a cursor to get stuff
           val cursor: HCursor = doc.hcursor
           // Get URN
@@ -45,7 +45,7 @@ package citejson {
           val urn:CtsUrn = { 
             urnString match {
               case Right(s) => CtsUrn(s)
-              case Left(er) => throw new CiteException(s"Unable to make URN: ${er}")
+              case Left(er) => throw new CiteJsonException(s"Unable to make URN: ${er}")
             }
           }
           // Get citationScheme
@@ -53,7 +53,7 @@ package citejson {
           val citationScheme:String = {
             citationSchemeString match {
               case Right(s) => s
-              case Left(er) => throw new CiteException(s"Unable to make citationScheme: ${er}")
+              case Left(er) => throw new CiteJsonException(s"Unable to make citationScheme: ${er}")
             }
           } 
           // Get lang
@@ -61,7 +61,7 @@ package citejson {
           val lang:String = {
             langString match {
               case Right(s) => s
-              case Left(er) => throw new CiteException(s"Unable to make lang: ${er}")
+              case Left(er) => throw new CiteJsonException(s"Unable to make lang: ${er}")
             }
           } 
           // Get groupName
@@ -69,7 +69,7 @@ package citejson {
           val groupName:String = {
             groupNameString match {
               case Right(s) => s
-              case Left(er) => throw new CiteException(s"Unable to make groupName: ${er}")
+              case Left(er) => throw new CiteJsonException(s"Unable to make groupName: ${er}")
             }
           } 
           // Get workTitle
@@ -77,7 +77,7 @@ package citejson {
           val workTitle:String = {
             workTitleString match {
               case Right(s) => s
-              case Left(er) => throw new CiteException(s"Unable to make workTitle: ${er}")
+              case Left(er) => throw new CiteJsonException(s"Unable to make workTitle: ${er}")
             }
           } 
           // Get versionLabel 
@@ -86,7 +86,7 @@ package citejson {
             versionLabelString match {
               case Right(s) if s.size > 0 => Some(s)
               case Right(s) if s.size == 0 => None
-              case Left(er) => throw new CiteException(s"Unable to make versionLabel: ${er}")
+              case Left(er) => throw new CiteJsonException(s"Unable to make versionLabel: ${er}")
             }
           } 
           // Get exemplarLabel
@@ -95,7 +95,7 @@ package citejson {
             exemplarLabelString match {
               case Right(s) if s.size > 0 => Some(s)
               case Right(s) if s.size == 0 => None
-              case Left(er) => throw new CiteException(s"Unable to make versionLabel: ${er}")
+              case Left(er) => throw new CiteJsonException(s"Unable to make versionLabel: ${er}")
             }
           } 
           // Get online
@@ -114,7 +114,7 @@ package citejson {
 
           newCat
         } catch {
-          case e:Exception =>  throw new CiteException(s"${e}")
+          case e:Exception =>  throw new CiteJsonException(s"${e}")
         }
       }
 
@@ -127,7 +127,7 @@ package citejson {
           val o2Cat:Catalog = o2Catalog(doc)
           o2Cat
         } catch {
-          case e:Exception =>  throw new CiteException(s"${e}")
+          case e:Exception =>  throw new CiteJsonException(s"${e}")
         }
       }
 
@@ -136,19 +136,19 @@ package citejson {
       */
       def o2Catalog(doc:Json):edu.holycross.shot.ohco2.Catalog = {
         try {
-          if(doc == Json.Null) throw new CiteException(s"Null JSON")
+          if(doc == Json.Null) throw new CiteJsonException(s"Null JSON")
           // We need a cursor to get stuff
           val cursor: HCursor = doc.hcursor
           val jsonList = cursor.downField("ctsCatalog").as[List[Json]]
           val ceList:List[Json] = jsonList match {
             case Right(jl) => jl
-            case _ => throw new CiteException("Failed to parse catalog into list of Catalog Entry JSON objects.")
+            case _ => throw new CiteJsonException("Failed to parse catalog into list of Catalog Entry JSON objects.")
           }
           val entryVector:Vector[CatalogEntry] = ceList.map(ce => o2CatalogEntry(ce)).toVector
           val o2Cat:Catalog = Catalog(entryVector)
           o2Cat
         } catch {
-          case e:Exception =>  throw new CiteException(s"${e}")
+          case e:Exception =>  throw new CiteJsonException(s"${e}")
         }
       }
 
@@ -161,7 +161,7 @@ package citejson {
           val o2RefVec:Vector[CtsUrn] = o2ReffVector(doc)
           o2RefVec
         } catch {
-          case e:Exception =>  throw new CiteException(s"${e}")
+          case e:Exception =>  throw new CiteJsonException(s"${e}")
         }
       }
 
@@ -170,18 +170,18 @@ package citejson {
       */
       def o2ReffVector(doc:Json):Vector[CtsUrn] = {
         try {
-          if(doc == Json.Null) throw new CiteException(s"Null JSON")
+          if(doc == Json.Null) throw new CiteJsonException(s"Null JSON")
           // We need a cursor to get stuff
           val cursor: HCursor = doc.hcursor
           val jsonList = cursor.downField("reff").as[List[String]]
           val ceList:List[String] = jsonList match {
             case Right(jl) => jl
-            case _ => throw new CiteException("Failed to parse catalog into list of URNs.")
+            case _ => throw new CiteJsonException("Failed to parse catalog into list of URNs.")
           }
           val entryVector:Vector[CtsUrn] = ceList.map(ce => CtsUrn(ce)).toVector
           entryVector
         } catch {
-          case e:Exception =>  throw new CiteException(s"${e}")
+          case e:Exception =>  throw new CiteJsonException(s"${e}")
         }
       }
 
@@ -194,7 +194,7 @@ package citejson {
           val o2CitNode:CitableNode = o2CitableNode(doc)
           o2CitNode
         } catch {
-          case e:Exception =>  throw new CiteException(s"${e}")
+          case e:Exception =>  throw new CiteJsonException(s"${e}")
         }
       }
 
@@ -203,7 +203,7 @@ package citejson {
       */
       def o2CitableNode(doc:Json):CitableNode = {
         try {
-          if(doc == Json.Null) throw new CiteException(s"Null JSON")
+          if(doc == Json.Null) throw new CiteJsonException(s"Null JSON")
           // We need a cursor to get stuff
           val cursor: HCursor = doc.hcursor
           // Get URN
@@ -211,7 +211,7 @@ package citejson {
           val urn:CtsUrn = { 
             urnString match {
               case Right(s) => CtsUrn(s)
-              case Left(er) => throw new CiteException(s"Unable to make URN: ${er}")
+              case Left(er) => throw new CiteJsonException(s"Unable to make URN: ${er}")
             }
           }
           // Get Text
@@ -219,13 +219,13 @@ package citejson {
           val text:String = { 
             textString match {
               case Right(s) => s
-              case Left(er) => throw new CiteException(s"Unable to make URN: ${er}")
+              case Left(er) => throw new CiteJsonException(s"Unable to make URN: ${er}")
             }
           }
           val cn:CitableNode = CitableNode(urn, text)
           cn
         } catch {
-          case e:Exception =>  throw new CiteException(s"${e}")
+          case e:Exception =>  throw new CiteJsonException(s"${e}")
         }
       }
 
@@ -238,7 +238,7 @@ package citejson {
           val o2CitNodes:Vector[CitableNode] = o2VectorOfCitableNodes(doc)
           o2CitNodes
         } catch {
-          case e:Exception =>  throw new CiteException(s"${e}")
+          case e:Exception =>  throw new CiteJsonException(s"${e}")
         }
       }
 
@@ -247,18 +247,18 @@ package citejson {
       */
       def o2VectorOfCitableNodes(doc:Json):Vector[CitableNode] = {
         try {
-          if(doc == Json.Null) throw new CiteException(s"Null JSON")
+          if(doc == Json.Null) throw new CiteJsonException(s"Null JSON")
           // We need a cursor to get stuff
           val cursor: HCursor = doc.hcursor
           val jsonList = cursor.downField("citableNodes").as[List[Json]]
           val ceList:List[Json] = jsonList match {
             case Right(jl) => jl
-            case _ => throw new CiteException("Failed to parse catalog into list of Catalog Entry JSON objects.")
+            case _ => throw new CiteJsonException("Failed to parse catalog into list of Catalog Entry JSON objects.")
           }
           val nodeVector:Vector[CitableNode] = ceList.map(ce => o2CitableNode(ce)).toVector
           nodeVector
         } catch {
-          case e:Exception =>  throw new CiteException(s"${e}")
+          case e:Exception =>  throw new CiteJsonException(s"${e}")
         }
       }
 
@@ -271,7 +271,7 @@ package citejson {
           val o2StrCnt:StringCount = o2StringCount(doc)
           o2StrCnt
         } catch {
-          case e:Exception =>  throw new CiteException(s"${e}")
+          case e:Exception =>  throw new CiteJsonException(s"${e}")
         }
       }
 
@@ -280,26 +280,26 @@ package citejson {
       */
       def o2StringCount(doc:Json):StringCount = {
         try {
-          if(doc == Json.Null) throw new CiteException(s"Null JSON")
+          if(doc == Json.Null) throw new CiteJsonException(s"Null JSON")
           // We need a cursor to get stuff
           val cursor: HCursor = doc.hcursor
           val js = cursor.get[String]("s")
           val s:String = { 
             js match {
               case Right(s) => s
-              case Left(er) => throw new CiteException(s"Unable to make URN: ${er}")
+              case Left(er) => throw new CiteJsonException(s"Unable to make URN: ${er}")
             }
           }
           val jc = cursor.get[String]("count")
           val c:Int = { 
             jc match {
               case Right(c) => c.toInt
-              case Left(er) => throw new CiteException(s"Unable to make URN: ${er}")
+              case Left(er) => throw new CiteJsonException(s"Unable to make URN: ${er}")
             }
           }
           StringCount(s,c)
         } catch {
-          case e:Exception =>  throw new CiteException(s"${e}")
+          case e:Exception =>  throw new CiteJsonException(s"${e}")
         }
       }
 
@@ -312,7 +312,7 @@ package citejson {
           val o2VecStrCnt:Vector[StringCount] = o2VectorOfStringCounts(doc)
           o2VecStrCnt
         } catch {
-          case e:Exception =>  throw new CiteException(s"${e}")
+          case e:Exception =>  throw new CiteJsonException(s"${e}")
         }
       }
 
@@ -321,7 +321,7 @@ package citejson {
       */
       def o2VectorOfStringCounts(doc:Json):Vector[StringCount] = {
         try {
-          if(doc == Json.Null) throw new CiteException(s"Null JSON")
+          if(doc == Json.Null) throw new CiteJsonException(s"Null JSON")
           // We need a cursor to get stuff
           val cursor: HCursor = doc.hcursor
           // Get a list of stringcount Jsons
@@ -340,7 +340,7 @@ package citejson {
           }).toVector
           vectorStrCnt
         } catch {
-          case e:Exception =>  throw new CiteException(s"${e}")
+          case e:Exception =>  throw new CiteJsonException(s"${e}")
         }
       }
 

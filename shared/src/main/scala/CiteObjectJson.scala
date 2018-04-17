@@ -15,11 +15,17 @@ package citejson {
   * @constructor create a new [[CiteObjJson]] service
   */
   @JSExportAll case class CiteObjJson() {
+
+    /** True if this class exists 
+    */
       def exists:Boolean = {
       	true
       }
 
-
+      /** True if this node is URN-similar to a second URN.
+      *
+      * @param str String expected to be "true" or "false"
+      */
       def parseBoolean(str:String):Boolean = {
         val b:Boolean = {
           str match {
@@ -30,6 +36,11 @@ package citejson {
         b
       }
 
+      /** Returns a Map("urn" -> String, "name" -> String, "license" -> String)
+      *
+      * @param str JSON string
+      */
+      @deprecated("Moved to CiteLibraryJson","citejson 1.1.2")
       def parseLibraryInfo(jsonString:String):Map[String,String] = {
         try {
           val doc: Json = parse(jsonString).getOrElse(Json.Null)
@@ -40,19 +51,19 @@ package citejson {
                   val testUrn = Cite2Urn(s)
                   s
                 }
-                case Left(er) => throw new CiteException(s"Unable to get URN: ${er}")
+                case Left(er) => throw new CiteJsonException(s"Unable to get URN: ${er}")
             }  
           }
           val nameString = {
             cursor.get[String]("name") match {
                 case Right(s) => s
-                case Left(er) => throw new CiteException(s"Unable to get Name: ${er}")
+                case Left(er) => throw new CiteJsonException(s"Unable to get Name: ${er}")
             }  
           }
           val licenseString = {
             cursor.get[String]("license") match {
               case Right(s) => s
-              case Left(er) => throw new CiteException(s"Unable to get License: ${er}")
+              case Left(er) => throw new CiteJsonException(s"Unable to get License: ${er}")
             }
           }
           val returnMap:Map[String,String] = Map(
@@ -62,23 +73,31 @@ package citejson {
           )
           returnMap
         } catch {
-          case e:Exception =>  throw new CiteException(s"${e}")
+          case e:Exception =>  throw new CiteJsonException(s"${e}")
         }
       }
 
+      /** Returns a CiteCollectionDef
+      *
+      * @param str JSON string
+      */
       def citeCollectionDef(jsonString:String):CiteCollectionDef = {
         try {
           val doc: Json = parse(jsonString).getOrElse(Json.Null)
           val collDef:CiteCollectionDef = citeCollectionDef(doc)
           collDef
         } catch {
-          case e:Exception =>  throw new CiteException(s"${e}")
+          case e:Exception =>  throw new CiteJsonException(s"${e}")
         }
       }
 
+      /** Returns a CiteCollectionDef
+      *
+      * @param doc io.circe.Json
+      */
       def citeCollectionDef(doc:io.circe.Json):CiteCollectionDef = {
         try {
-          if(doc == Json.Null) throw new CiteException(s"Null JSON")
+          if(doc == Json.Null) throw new CiteJsonException(s"Null JSON")
           // We need a cursor to get stuff
           val cursor: HCursor = doc.hcursor
 
@@ -87,7 +106,7 @@ package citejson {
           val collUrn:Cite2Urn = {
             urnString match {
               case Right(s) => Cite2Urn(s)
-              case Left(er) => throw new CiteException(s"Unable to make URN: ${er}")
+              case Left(er) => throw new CiteJsonException(s"Unable to make URN: ${er}")
             }          
           }
           // Get collectionLabel
@@ -95,7 +114,7 @@ package citejson {
           val collLabel:String = {
             collLabelString match {
               case Right(s) => s
-              case Left(er) => throw new CiteException(s"Unable to find Collection Label: ${er}")
+              case Left(er) => throw new CiteJsonException(s"Unable to find Collection Label: ${er}")
             }          
           }
           // Get license
@@ -103,7 +122,7 @@ package citejson {
           val collLicense:String = {
             collLicenceString match {
               case Right(s) => s
-              case Left(er) => throw new CiteException(s"Unable to find Collection License: ${er}")
+              case Left(er) => throw new CiteJsonException(s"Unable to find Collection License: ${er}")
             }          
           }
           // Get labelling propoerty
@@ -117,7 +136,7 @@ package citejson {
                     Some(Cite2Urn(s)) 
                   }
                 }
-              case Left(er) => throw new CiteException(s"Unable to find Collection Labelling Property: ${er}")
+              case Left(er) => throw new CiteJsonException(s"Unable to find Collection Labelling Property: ${er}")
             }          
           }
           // Get ordering property
@@ -131,7 +150,7 @@ package citejson {
                     Some(Cite2Urn(s)) 
                   }
                 }
-              case Left(er) => throw new CiteException(s"Unable to find Collection Ordering Property: ${er}")
+              case Left(er) => throw new CiteJsonException(s"Unable to find Collection Ordering Property: ${er}")
             }          
           }
 
@@ -140,7 +159,7 @@ package citejson {
           val propDefList:List[Json] = {
             propertyDefsString match {
               case Right(cds) => cds
-              case _ => throw new CiteException("Failed to parse catalog into list of Catalog Entry JSON objects.")
+              case _ => throw new CiteJsonException("Failed to parse catalog into list of Catalog Entry JSON objects.")
             }
           }
           val propertyDefs:Vector[CitePropertyDef] = propDefList.map( pd =>{
@@ -150,23 +169,31 @@ package citejson {
           val returnCCD:CiteCollectionDef = CiteCollectionDef(collUrn,collLabel,propertyDefs,collLicense,collLabelProperty,collOrderProperty)
           returnCCD
         } catch {
-          case e:Exception =>  throw new CiteException(s"${e}")
+          case e:Exception =>  throw new CiteJsonException(s"${e}")
         }
       }
 
+      /** Returns a CitePropertyDef
+      *
+      * @param jsonString JSON string
+      */
       def citePropertyDef(jsonString:String):CitePropertyDef = {
         try {
           val doc: Json = parse(jsonString).getOrElse(Json.Null)
           val propDef:CitePropertyDef = citePropertyDef(doc)
           propDef
         } catch {
-          case e:Exception =>  throw new CiteException(s"${e}")
+          case e:Exception =>  throw new CiteJsonException(s"${e}")
         }
       }
 
+      /** Returns a CitePropertyDef
+      *
+      * @param doc io.circe.Json
+      */
       def citePropertyDef(doc:io.circe.Json):CitePropertyDef = {
         try {
-          if(doc == Json.Null) throw new CiteException(s"Null JSON")
+          if(doc == Json.Null) throw new CiteJsonException(s"Null JSON")
           // We need a cursor to get stuff
           val cursor: HCursor = doc.hcursor
 
@@ -175,7 +202,7 @@ package citejson {
           val propUrn:Cite2Urn = {
             urnString match {
               case Right(s) => Cite2Urn(s)
-              case Left(er) => throw new CiteException(s"Unable to make URN: ${er}")
+              case Left(er) => throw new CiteJsonException(s"Unable to make URN: ${er}")
             }          
           }
           // Get Label
@@ -183,7 +210,7 @@ package citejson {
           val propLabel:String = {
             labelString match {
               case Right(s) => s
-              case Left(er) => throw new CiteException(s"Unable to make PropertyLabel: ${er}")
+              case Left(er) => throw new CiteJsonException(s"Unable to make PropertyLabel: ${er}")
             }          
           }
 
@@ -199,10 +226,10 @@ package citejson {
                   case "BooleanType" => BooleanType 
                   case "StringType" => StringType 
                   case "ControlledVocabType" => ControlledVocabType 
-                  case _ => throw new CiteException(s"${s} is not a CitePropertyType.")
+                  case _ => throw new CiteJsonException(s"${s} is not a CitePropertyType.")
                 } 
               }
-              case Left(er) => throw new CiteException(s"Unable to make PropertyType: ${er}")
+              case Left(er) => throw new CiteJsonException(s"Unable to make PropertyType: ${er}")
             }
           }
 
@@ -218,30 +245,38 @@ package citejson {
                   }
                 }
               } 
-              case Left(er) => throw new CiteException(s"Unable to make Vocabulary List: ${er}")
+              case Left(er) => throw new CiteJsonException(s"Unable to make Vocabulary List: ${er}")
             }          
           }
 
           val returnCPD:CitePropertyDef = CitePropertyDef(propUrn,propLabel,propType,controlledVocab)
           returnCPD
         } catch {
-          case e:Exception =>  throw new CiteException(s"${e}")
+          case e:Exception =>  throw new CiteJsonException(s"${e}")
         }
       }
-
+      
+      /** Returns a CiteCatalog
+      *
+      * @param jsonString JSON string
+      */
       def citeCatalog(jsonString:String):CiteCatalog = {
         try {
           val doc: Json = parse(jsonString).getOrElse(Json.Null)
           val citeCat:CiteCatalog = citeCatalog(doc)
           citeCat 
         } catch {
-          case e:Exception =>  throw new CiteException(s"${e}")
+          case e:Exception =>  throw new CiteJsonException(s"${e}")
         }
       }
 
+      /** Returns a CiteCatalog
+      *
+      * @param doc io.circe.Json
+      */
       def citeCatalog(doc:io.circe.Json):CiteCatalog = {
         try {
-          if(doc == Json.Null) throw new CiteException(s"Null JSON")
+          if(doc == Json.Null) throw new CiteJsonException(s"Null JSON")
           // We need a cursor to get stuff
           val cursor: HCursor = doc.hcursor
 
@@ -250,7 +285,7 @@ package citejson {
           val collDefList:List[Json] = {
             collectionDefsString match {
               case Right(ccd) => ccd
-              case _ => throw new CiteException("Failed to parse catalog into list of Collection Def JSON objects.")
+              case _ => throw new CiteJsonException("Failed to parse catalog into list of Collection Def JSON objects.")
             }
           }
           val collectionDefs:Vector[CiteCollectionDef] = collDefList.map( cd => {
@@ -261,23 +296,32 @@ package citejson {
           citeCat
 
         } catch {
-          case e:Exception =>  throw new CiteException(s"${e}")
+          case e:Exception =>  throw new CiteJsonException(s"${e}")
         }
       }
 
+      
+      /** Returns a CitePropertyImplementation
+      *
+      * @param jsonString JSON string
+      */
       def citePropertyImplementation(jsonString:String):CitePropertyImplementation = {
         try {
           val doc: Json = parse(jsonString).getOrElse(Json.Null)
           val citePropImpl:CitePropertyImplementation = citePropertyImplementation(doc)
           citePropImpl 
         } catch {
-          case e:Exception =>  throw new CiteException(s"${e}")
+          case e:Exception =>  throw new CiteJsonException(s"${e}")
         }
       }
 
+      /** Returns a CitePropertyImplementation
+      *
+      * @param doc io.circe.Json
+      */
       def citePropertyImplementation(doc:io.circe.Json):CitePropertyImplementation = {
         try {
-          if(doc == Json.Null) throw new CiteException(s"Null JSON")
+          if(doc == Json.Null) throw new CiteJsonException(s"Null JSON")
           // We need a cursor to get stuff
           val cursor: HCursor = doc.hcursor
 
@@ -286,7 +330,7 @@ package citejson {
           val propUrn:Cite2Urn = {
             propDefUrnString match {
               case Right(s) => Cite2Urn(s)
-              case Left(er) => throw new CiteException(s"Unable to make URN: ${er}")
+              case Left(er) => throw new CiteJsonException(s"Unable to make URN: ${er}")
             }          
           }
           val propDefUrn:Cite2Urn = propUrn.dropSelector
@@ -296,7 +340,7 @@ package citejson {
           val propDefLabel:String = {
             propDefLabelString match {
               case Right(s) => s
-              case Left(er) => throw new CiteException(s"Unable to make Property Definition Label: ${er}")
+              case Left(er) => throw new CiteJsonException(s"Unable to make Property Definition Label: ${er}")
             }          
           }
 
@@ -312,10 +356,10 @@ package citejson {
                   case "BooleanType" => BooleanType 
                   case "StringType" => StringType 
                   case "ControlledVocabType" => ControlledVocabType 
-                  case _ => throw new CiteException(s"${s} is not a CitePropertyType.")
+                  case _ => throw new CiteJsonException(s"${s} is not a CitePropertyType.")
                 } 
               }
-              case Left(er) => throw new CiteException(s"Unable to make Property Type: ${er}")
+              case Left(er) => throw new CiteJsonException(s"Unable to make Property Type: ${er}")
             }
           }
 
@@ -331,7 +375,7 @@ package citejson {
                   }
                 }
               } 
-              case Left(er) => throw new CiteException(s"Unable to make Vocabulary List: ${er}")
+              case Left(er) => throw new CiteJsonException(s"Unable to make Vocabulary List: ${er}")
             }          
           }
 
@@ -351,10 +395,10 @@ package citejson {
                   case BooleanType => s.toBoolean
                   case StringType => s
                   case ControlledVocabType => s
-                  case _ => throw new CiteException(s"${propType} is not a CitePropertyType.")
+                  case _ => throw new CiteJsonException(s"${propType} is not a CitePropertyType.")
                 } 
               }
-              case Left(er) => throw new CiteException(s"Unable to make Property Value: ${er}")
+              case Left(er) => throw new CiteJsonException(s"Unable to make Property Value: ${er}")
             }
           }
           val newCiteProperty:CitePropertyImplementation = CitePropertyImplementation(propUrn, citePropDef, propertyValue)
@@ -362,23 +406,32 @@ package citejson {
           newCiteProperty
 
         } catch {
-          case e:Exception =>  throw new CiteException(s"${e}")
+          case e:Exception =>  throw new CiteJsonException(s"${e}")
         }
       }
 
+      
+      /** Returns a CiteObject
+      *
+      * @param jsonString JSON string
+      */
       def citeObject(jsonString:String):CiteObject = {
         try {
           val doc: Json = parse(jsonString).getOrElse(Json.Null)
           val citeObj:CiteObject = citeObject(doc)
           citeObj 
         } catch {
-          case e:Exception =>  throw new CiteException(s"${e}")
+          case e:Exception =>  throw new CiteJsonException(s"${e}")
         }
       }
 
+      /** Returns a CiteObject
+      *
+      * @param doc io.circe.Json
+      */
       def citeObject(doc:io.circe.Json):CiteObject = {
         try {
-          if(doc == Json.Null) throw new CiteException(s"Null JSON")
+          if(doc == Json.Null) throw new CiteJsonException(s"Null JSON")
           // We need a cursor to get stuff
           val cursor: HCursor = doc.hcursor
 
@@ -387,7 +440,7 @@ package citejson {
           val urn:Cite2Urn = {
             urnStr match {
               case Right(s) => Cite2Urn(s)
-              case Left(er) => throw new CiteException(s"Unable to make CiteObject urn: ${er}")
+              case Left(er) => throw new CiteJsonException(s"Unable to make CiteObject urn: ${er}")
             }          
           }
 
@@ -396,7 +449,7 @@ package citejson {
           val label:String = {
             labelStr match {
               case Right(s) => s
-              case Left(er) => throw new CiteException(s"Unable to make CiteObject label: ${er}")
+              case Left(er) => throw new CiteJsonException(s"Unable to make CiteObject label: ${er}")
             }          
           }
 
@@ -407,7 +460,7 @@ package citejson {
               case Right(pv) => {
                 pv.map(p => citePropertyImplementation(p)).toVector
               }
-              case Left(er) => throw new CiteException(s"Unable to make vector of CitePropertyImplementations: ${er}")
+              case Left(er) => throw new CiteJsonException(s"Unable to make vector of CitePropertyImplementations: ${er}")
             }
           }
 
@@ -415,51 +468,69 @@ package citejson {
           val co:CiteObject = CiteObject(urn,label,propVec)
           co
         } catch {
-          case e:Exception =>  throw new CiteException(s"${e}")
+          case e:Exception =>  throw new CiteJsonException(s"${e}")
         }
       }
 
+      
+      /** Returns a Vector[CiteObject]
+      *
+      * @param jsonString JSON string
+      */
       def vectorOfCiteObjects(jsonString:String):Vector[CiteObject] = {
         try {
           val doc: Json = parse(jsonString).getOrElse(Json.Null)
           val citeObj:Vector[CiteObject] = vectorOfCiteObjects(doc)
           citeObj 
         } catch {
-          case e:Exception =>  throw new CiteException(s"${e}")
+          case e:Exception =>  throw new CiteJsonException(s"${e}")
         }
       }
 
+      /** Returns a Vector[CiteObject]
+      *
+      * @param doc io.circe.Json
+      */
       def vectorOfCiteObjects(doc:io.circe.Json):Vector[CiteObject] = {
         try {
-          if(doc == Json.Null) throw new CiteException(s"Null JSON")
+          if(doc == Json.Null) throw new CiteJsonException(s"Null JSON")
           // We need a cursor to get stuff
           val cursor: HCursor = doc.hcursor
           val vecCiteObjJson = cursor.downField("citeObjects").as[List[Json]]
           val vco:Vector[CiteObject] = {
             vecCiteObjJson match {
               case Right(v) => v.map(co => citeObject(co)).toVector
-              case Left(er) => throw new CiteException(s"Unable to make vector of CiteObjects: ${er}")
+              case Left(er) => throw new CiteJsonException(s"Unable to make vector of CiteObjects: ${er}")
             } 
           }
           vco
         } catch {
-          case e:Exception =>  throw new CiteException(s"${e}")
+          case e:Exception =>  throw new CiteJsonException(s"${e}")
         }
       }
 
+      
+      /** Returns a DataModel
+      *
+      * @param jsonString JSON string
+      */
      def dataModel(jsonString:String):DataModel = {
         try {
           val doc: Json = parse(jsonString).getOrElse(Json.Null)
           val dm:DataModel = dataModel(doc)
           dm 
         } catch {
-          case e:Exception =>  throw new CiteException(s"${e}")
+          case e:Exception =>  throw new CiteJsonException(s"${e}")
         }
       }
 
+      /** Returns a DataModel
+      *
+      * @param doc io.circe.Json
+      */
       def dataModel(doc:io.circe.Json):DataModel = {
         try {
-          if(doc == Json.Null) throw new CiteException(s"Null JSON")
+          if(doc == Json.Null) throw new CiteJsonException(s"Null JSON")
           // We need a cursor to get stuff
           val cursor: HCursor = doc.hcursor
 
@@ -468,7 +539,7 @@ package citejson {
           val coll:Cite2Urn = {
             collJson match {
               case Right(c) => Cite2Urn(c)
-              case Left(er) => throw new CiteException(s"Unable to make collection urn: ${er}")
+              case Left(er) => throw new CiteJsonException(s"Unable to make collection urn: ${er}")
             }
           }
           // get description
@@ -476,7 +547,7 @@ package citejson {
           val desc:String = {
             descJson match {
               case Right(d) => d
-              case Left(er) => throw new CiteException(s"Unable to make description: ${er}")
+              case Left(er) => throw new CiteJsonException(s"Unable to make description: ${er}")
             }
           }
           // get label
@@ -484,7 +555,7 @@ package citejson {
           val label:String = {
             labelJson match {
               case Right(l) => l
-              case Left(er) => throw new CiteException(s"Unable to make label: ${er}")
+              case Left(er) => throw new CiteJsonException(s"Unable to make label: ${er}")
             }
           }
             // get model
@@ -492,42 +563,51 @@ package citejson {
           val model:Cite2Urn = {
             modelJson match {
               case Right(m) => Cite2Urn(m)
-              case Left(er) => throw new CiteException(s"Unable to make model urn: ${er}")
+              case Left(er) => throw new CiteJsonException(s"Unable to make model urn: ${er}")
             }
           }
 
           val dm:DataModel = DataModel(coll,model,label,desc)
           dm
         } catch {
-          case e:Exception =>  throw new CiteException(s"${e}")
+          case e:Exception =>  throw new CiteJsonException(s"${e}")
         }
       }
 
+      
+      /** Returns a Vector[DataModel]
+      *
+      * @param jsonString JSON string
+      */
      def dataModels(jsonString:String):Vector[DataModel] = {
         try {
           val doc: Json = parse(jsonString).getOrElse(Json.Null)
           val dms:Vector[DataModel] = dataModels(doc)
           dms 
         } catch {
-          case e:Exception =>  throw new CiteException(s"${e}")
+          case e:Exception =>  throw new CiteJsonException(s"${e}")
         }
       }
 
+      /** Returns a Vector[DataModel]
+      *
+      * @param doc io.circe.Json
+      */
       def dataModels(doc:io.circe.Json):Vector[DataModel] = {
         try {
-          if(doc == Json.Null) throw new CiteException(s"Null JSON")
+          if(doc == Json.Null) throw new CiteJsonException(s"Null JSON")
           // We need a cursor to get stuff
           val cursor: HCursor = doc.hcursor
           val vecDMJson = cursor.downField("dataModels").as[List[Json]]
           val vecDM:Vector[DataModel] = {
               vecDMJson match {
                 case Right(vdm) => vdm.map( dm => dataModel(dm)).toVector
-                case Left(er) => throw new CiteException(s"Unable to make vector of DataModels: ${er}")
+                case Left(er) => throw new CiteJsonException(s"Unable to make vector of DataModels: ${er}")
               }
           } 
           vecDM
         } catch {
-          case e:Exception =>  throw new CiteException(s"${e}")
+          case e:Exception =>  throw new CiteJsonException(s"${e}")
         }
       }
   }
