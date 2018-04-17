@@ -70,7 +70,7 @@ package citejson {
               "name" -> nameString,
               "urn" -> urnString,
               "license" -> licenseString
-          )
+          ).toMap
           returnMap
         } catch {
           case e:Exception =>  throw new CiteJsonException(s"${e}")
