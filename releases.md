@@ -1,5 +1,7 @@
 # citejson: release notes
 
+**2.0.0**:  Breaking change: ctsUrnStr now returns an Option[CtsUrn]  
+
 **1.1.4**:  Added method for parsing a single CtsUrnString.
 
 **1.1.3**:  Moved method for parsing a JSON expression of a Cite Library's metadata (urn, name, license) into CiteLibraryJson class.

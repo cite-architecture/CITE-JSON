@@ -22,10 +22,10 @@ package citejson {
       /** Given a JSON string, construct a single CtsUrn
       * @param jsonString
       */
-      def o2CtsUrnString(jsonString:String):CtsUrn = {
+      def o2CtsUrnString(jsonString:String):Option[CtsUrn] = {
         try {
           val doc: Json = parse(jsonString).getOrElse(Json.Null)
-          val ctsUrn:CtsUrn = o2CtsUrnString(doc)
+          val ctsUrn:Option[CtsUrn] = o2CtsUrnString(doc)
           ctsUrn
         } catch {
           case e:Exception =>  throw new CiteJsonException(s"Failed with string param ${jsonString} :: ${e}")
@@ -35,16 +35,21 @@ package citejson {
        /** Given a JSON string, construct a single CtsUrn
       * @param jsonString
       */
-      def o2CtsUrnString(doc:io.circe.Json):CtsUrn = {
+      def o2CtsUrnString(doc:io.circe.Json):Option[CtsUrn] = {
         try {
           if(doc == Json.Null) throw new CiteJsonException(s"Null JSON: ${doc}")
           // We need a cursor to get stuff
           val cursor: HCursor = doc.hcursor
          // Get URN
           val urnString = cursor.get[String]("urnString")
-          val urn:CtsUrn = { 
+          val urn:Option[CtsUrn] = { 
             urnString match {
-              case Right(s) => CtsUrn(s)
+              case Right(str) => {
+                str.size match {
+                  case n if (n > 0) => Some(CtsUrn(str))
+                  case _ => None
+                }
+              }
               case Left(er) => throw new CiteJsonException(s"Unable to make URN: ${er}")
             }
           }

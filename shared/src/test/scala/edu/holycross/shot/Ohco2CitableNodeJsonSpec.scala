@@ -39,8 +39,17 @@ class Ohco2CitableNodeJsonSpec extends FlatSpec {
 {"urnString":"urn:cts:greekLit:tlg0012.tlg001.perseus_grc2:1.1"} """
     val cjo:Ohco2Json = Ohco2Json()
     assert(cjo.exists)
-    val cu:CtsUrn = cjo.o2CtsUrnString(urnString) 
-    assert(cu == CtsUrn("urn:cts:greekLit:tlg0012.tlg001.perseus_grc2:1.1"))
+    val cu:Option[CtsUrn] = cjo.o2CtsUrnString(urnString) 
+    assert(cu == Some(CtsUrn("urn:cts:greekLit:tlg0012.tlg001.perseus_grc2:1.1")))
+  }
+
+  it should "parse an empty ctsUrnString to None" in {
+    val urnString:String = """
+{"urnString":""} """
+    val cjo:Ohco2Json = Ohco2Json()
+    assert(cjo.exists)
+    val cu:Option[CtsUrn] = cjo.o2CtsUrnString(urnString) 
+    assert(cu == None)
   }
 
 
