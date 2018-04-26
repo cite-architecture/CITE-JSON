@@ -75,6 +75,27 @@ package citejson {
           case e:Exception =>  throw new CiteJsonException(s"${e}")
         }
       }
+
+      /** Returns a Map(Cite2Urn -> String)
+      *
+      * @param str JSON string
+      */
+      def parseLabelMap(jsonString:String):Map[Cite2Urn,String] = {
+        try {
+          val doc: Json = parse(jsonString).getOrElse(Json.Null)
+          val cursor: HCursor = doc.hcursor
+          val stringMap:Map[String,String] = {
+            cursor.downField("labelMap").as[Map[String,String]] match {
+              case Right(s) => s
+              case Left(er) => throw new CiteJsonException(s"Unable to get License: ${er}")
+            }
+          }
+          val labelMap = stringMap.map {case (key, value) => (Cite2Urn(key), value )}
+          labelMap
+        } catch {
+          case e:Exception =>  throw new CiteJsonException(s"${e}")
+        }
+      }
   }
 
 }

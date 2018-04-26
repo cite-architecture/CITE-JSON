@@ -27,6 +27,7 @@ class CiteCollectionJsonSpec extends FlatSpec {
   {"dataModels":[{"dataModel":{"collection":"urn:cite2:hmt:vaimg.2017a:","description":"CITE architecture model of citable images.  See documentation at <http://cite-architecture.github.io/imagemodel/>.","label":"Citable image model","model":"urn:cite2:cite:datamodels.v1:imagemodel"}},{"dataModel":{"collection":"urn:cite2:hmt:vaimg.2017a:","description":"CITE architectur model of binary images manipulable by URN reference.  See <TBA>.","label":"Citable image model","model":"urn:cite2:cite:datamodels.v1:binaryimg"}}]}
   """
 
+
   "The CiteObjJson Library" should "compile" in {
     val cjo:CiteObjJson = CiteObjJson()
     assert(cjo.exists)

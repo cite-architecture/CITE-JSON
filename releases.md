@@ -1,5 +1,7 @@
 # citejson: release notes
 
+**2.1.0**:  Added parsing for a `labelMap`, `Map[Cite2Urn,String]`.
+
 **2.0.0**:  Breaking change: ctsUrnStr now returns an Option[CtsUrn]  
 
 **1.1.4**:  Added method for parsing a single CtsUrnString.
