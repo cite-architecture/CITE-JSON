@@ -77,6 +77,46 @@ package citejson {
         }
       }
 
+            /** Given a JSON string, construct a single Cite2Urn
+      * @param jsonString
+      */
+      def cite2UrnString(jsonString:String):Option[Cite2Urn] = {
+        try {
+          val doc: Json = parse(jsonString).getOrElse(Json.Null)
+          val ctsUrn:Option[Cite2Urn] = cite2UrnString(doc)
+          ctsUrn
+        } catch {
+          case e:Exception =>  throw new CiteJsonException(s"Failed with string param ${jsonString} :: ${e}")
+        }
+      }
+
+       /** Given a JSON string, construct a single Cite2Urn
+      * @param jsonString
+      */
+      def cite2UrnString(doc:io.circe.Json):Option[Cite2Urn] = {
+        try {
+          if(doc == Json.Null) throw new CiteJsonException(s"Null JSON: ${doc}")
+          // We need a cursor to get stuff
+          val cursor: HCursor = doc.hcursor
+         // Get URN
+          val urnString = cursor.get[String]("urnString")
+          val urn:Option[Cite2Urn] = { 
+            urnString match {
+              case Right(str) => {
+                str.size match {
+                  case n if (n > 0) => Some(Cite2Urn(str))
+                  case _ => None
+                }
+              }
+              case Left(er) => throw new CiteJsonException(s"Unable to make URN: ${er}")
+            }
+          }
+          urn 
+        } catch {
+          case e:Exception =>  throw new CiteJsonException(s"${e}")
+        }
+      }
+
       /** Returns a CiteCollectionDef
       *
       * @param str JSON string
@@ -508,6 +548,62 @@ package citejson {
           case e:Exception =>  throw new CiteJsonException(s"${e}")
         }
       }
+
+      /** Returns a Vector[Cite2Urn]
+      *
+      * @param jsonString JSON String
+      */
+      def vectorOfCite2Urns(jsonString:String):Vector[Cite2Urn] = {
+        try {
+          val doc: Json = parse(jsonString).getOrElse(Json.Null)
+          val citeUrns:Vector[Cite2Urn] = vectorOfCite2Urns(doc)
+          citeUrns 
+        } catch {
+          case e:Exception =>  throw new CiteJsonException(s"${e}")
+        }
+      }
+
+      /** Returns a Vector[Cite2Urn]
+      *
+      * @param doc io.circe.Json
+      */
+      def vectorOfCite2Urns(doc:io.circe.Json):Vector[Cite2Urn] = {
+        try {
+          if(doc == Json.Null) throw new CiteJsonException(s"Null JSON")
+          // We need a cursor to get stuff
+          val cursor: HCursor = doc.hcursor
+          val vecCite2UrnJson = cursor.downField("cite2Urns").as[List[Json]]
+          val vcu:Vector[Cite2Urn] = {
+            vecCite2UrnJson match {
+              case Right(v) => v.map(co => cite2UrnJson(co)).toVector
+              case Left(er) => throw new CiteJsonException(s"Unable to make vector of CiteObjects: ${er}")
+            } 
+          }
+          vcu
+        } catch {
+          case e:Exception =>  throw new CiteJsonException(s"${e}")
+        }
+      }
+
+      def cite2UrnJson(doc:io.circe.Json):Cite2Urn = {
+        try {
+          if(doc == Json.Null) throw new CiteJsonException(s"Null JSON")
+          // We need a cursor to get stuff
+          val cursor: HCursor = doc.hcursor
+          val urnStr = cursor.downField("urnString").as[String]
+          val u:Cite2Urn = {
+            urnStr match {
+              case Right(v) => Cite2Urn(v)
+              case Left(er) => throw new CiteJsonException(s"Unable to make Cite2 Urn from: ${er}")
+            } 
+          }
+          u
+        } catch {
+          case e:Exception =>  throw new CiteJsonException(s"${e}")
+        }
+      }
+
+
 
       
       /** Returns a DataModel

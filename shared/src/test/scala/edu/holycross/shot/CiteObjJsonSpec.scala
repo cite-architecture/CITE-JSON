@@ -9,6 +9,9 @@ import org.scalatest.FlatSpec
 
 class CiteObjJsonSpec extends FlatSpec {
 
+  val vectorOfCite2Urns:String = """
+  {"cite2Urns":[{"urnString":"urn:cite2:hmt:compimg.v1:"},{"urnString":"urn:cite2:hmt:vaimg.2017a:"}]}
+  """
 
   val propertyValueString_NumericType:String = """
  {"propertyDefLabel":"Page sequence","propertyDefVocab":"","propertyType":"NumericType","propertyUrn":"urn:cite2:hmt:msA.v1.sequence:1r","propertyValue":"1.0"}
@@ -41,6 +44,12 @@ class CiteObjJsonSpec extends FlatSpec {
   {"citeObjects":[{"citeObject":{"urn":"urn:cite2:hmt:e4.v1:1r","label":"Escorial Omega 1.12 folio 1r"},"citePropertyValues":[{"propertyDefUrn":"urn:cite2:hmt:e4.v1.sequence:","propertyDefLabel":"Page sequence","propertyDefVocab":"","propertyType":"NumericType","propertyUrn":"urn:cite2:hmt:e4.v1.sequence:1r","propertyValue":"1.0","propertyDefType":"NumericType"},{"propertyDefUrn":"urn:cite2:hmt:e4.v1.fakeboolean:","propertyDefLabel":"Boolean for Testing","propertyDefVocab":"","propertyType":"BooleanType","propertyUrn":"urn:cite2:hmt:e4.v1.fakeboolean:1r","propertyValue":"true","propertyDefType":"BooleanType"},{"propertyDefUrn":"urn:cite2:hmt:e4.v1.rv:","propertyDefLabel":"Recto or Verso","propertyDefVocab":"recto,verso","propertyType":"ControlledVocabType","propertyUrn":"urn:cite2:hmt:e4.v1.rv:1r","propertyValue":"recto","propertyDefType":"ControlledVocabType"}]},{"citeObject":{"urn":"urn:cite2:hmt:e4.v1:1v","label":"Escorial Omega 1.12 folio 1v"},"citePropertyValues":[{"propertyDefUrn":"urn:cite2:hmt:e4.v1.sequence:","propertyDefLabel":"Page sequence","propertyDefVocab":"","propertyType":"NumericType","propertyUrn":"urn:cite2:hmt:e4.v1.sequence:1v","propertyValue":"2.0","propertyDefType":"NumericType"},{"propertyDefUrn":"urn:cite2:hmt:e4.v1.fakeboolean:","propertyDefLabel":"Boolean for Testing","propertyDefVocab":"","propertyType":"BooleanType","propertyUrn":"urn:cite2:hmt:e4.v1.fakeboolean:1v","propertyValue":"true","propertyDefType":"BooleanType"},{"propertyDefUrn":"urn:cite2:hmt:e4.v1.rv:","propertyDefLabel":"Recto or Verso","propertyDefVocab":"recto,verso","propertyType":"ControlledVocabType","propertyUrn":"urn:cite2:hmt:e4.v1.rv:1v","propertyValue":"verso","propertyDefType":"ControlledVocabType"}]},{"citeObject":{"urn":"urn:cite2:hmt:e4.v1:2r","label":"Escorial Omega 1.12 folio 2r"},"citePropertyValues":[{"propertyDefUrn":"urn:cite2:hmt:e4.v1.sequence:","propertyDefLabel":"Page sequence","propertyDefVocab":"","propertyType":"NumericType","propertyUrn":"urn:cite2:hmt:e4.v1.sequence:2r","propertyValue":"3.0","propertyDefType":"NumericType"},{"propertyDefUrn":"urn:cite2:hmt:e4.v1.fakeboolean:","propertyDefLabel":"Boolean for Testing","propertyDefVocab":"","propertyType":"BooleanType","propertyUrn":"urn:cite2:hmt:e4.v1.fakeboolean:2r","propertyValue":"false","propertyDefType":"BooleanType"},{"propertyDefUrn":"urn:cite2:hmt:e4.v1.rv:","propertyDefLabel":"Recto or Verso","propertyDefVocab":"recto,verso","propertyType":"ControlledVocabType","propertyUrn":"urn:cite2:hmt:e4.v1.rv:2r","propertyValue":"recto","propertyDefType":"ControlledVocabType"}]}]}
   """
 
+  val cite2UrnStringJson:String = """
+      {"urnString":"urn:cite2:hmt:e4.v1:1r"}
+  """
+  val cite2UrnStringJsonEmpty:String = """
+      {"urnString":""}
+  """
 
   "The CiteObjJson Library" should "compile" in {
     val cjo:CiteObjJson = CiteObjJson()
@@ -63,6 +72,20 @@ class CiteObjJsonSpec extends FlatSpec {
       }
       case _ => { fail("neither left nor right?")}
     }
+  }
+
+  it should "create an Option[Cite2Urn] from Json" in {
+    val cjo:CiteObjJson = CiteObjJson()
+    assert(cjo.exists)
+    val cpi:Option[Cite2Urn] = cjo.cite2UrnString(cite2UrnStringJson)
+    assert(cpi == Some(Cite2Urn("urn:cite2:hmt:e4.v1:1r")))
+  }
+
+  it should "create an Option[Cite2Urn] with value None from empty Json" in {
+    val cjo:CiteObjJson = CiteObjJson()
+    assert(cjo.exists)
+    val cpi:Option[Cite2Urn] = cjo.cite2UrnString(cite2UrnStringJsonEmpty)
+    assert(cpi == None)
   }
 
   it should "create a CitePropertyImplementation of CtsUrnType" in {
@@ -137,5 +160,14 @@ class CiteObjJsonSpec extends FlatSpec {
     assert(vco(0).propertyList.size == 3)
   }
 
+  it should "create a vector of Cite2Urns" in {
+    val cjo:CiteObjJson = CiteObjJson()
+    assert(cjo.exists)
+    val vcu:Vector[Cite2Urn] = cjo.vectorOfCite2Urns(vectorOfCite2Urns)
+    assert(vcu.size == 2)
+    assert(vcu(0) == Cite2Urn("urn:cite2:hmt:compimg.v1:"))
+    assert(vcu(1) == Cite2Urn("urn:cite2:hmt:vaimg.2017a:"))
+  }
 
+  
 }
