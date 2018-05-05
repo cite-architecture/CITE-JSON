@@ -1,5 +1,7 @@
 # citejson: release notes
 
+**2.4.0**:  Added parsing DseRecord and Vector[DseRecord]
+
 **2.3.0**:  Added parsing for a `Vector[Cite2Urn]`.
 
 **2.2.0**:  Added parsing for a `cite2UrnString`.

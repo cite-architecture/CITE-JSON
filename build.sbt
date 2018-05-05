@@ -19,7 +19,7 @@ lazy val crossed = crossProject.in(file(".")).
     settings(
       name := "citejson",
       organization := "edu.holycross.shot",
-      version := "2.3.0",
+      version := "2.4.0",
       licenses += ("GPL-3.0",url("https://opensource.org/licenses/gpl-3.0.html")),
       resolvers += Resolver.jcenterRepo,
       resolvers += Resolver.bintrayRepo("neelsmith", "maven"),
@@ -31,6 +31,7 @@ lazy val crossed = crossProject.in(file(".")).
         "edu.holycross.shot" %%% "citeobj" % "7.0.0",
         "edu.holycross.shot" %%% "citerelations" % "2.0.4",
         "edu.holycross.shot" %%% "ohco2" % "10.7.0",
+        "edu.holycross.shot" %%% "dse" % "3.0.0",
         "edu.holycross.shot" %%% "scm" % "6.0.0"
       ),
       libraryDependencies ++= Seq(
