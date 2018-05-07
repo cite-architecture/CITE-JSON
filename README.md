@@ -4,7 +4,7 @@
 
 `citejson` is a cross-platform library for translating CITE objects from JSON expressions to Scala Objects.
 
-## Current version: 2.4.0
+## Current version: 2.5.0
 
 Status:  **active development**. [Release notes](releases.md)
 

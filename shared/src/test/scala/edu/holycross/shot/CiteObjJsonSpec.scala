@@ -40,6 +40,10 @@ class CiteObjJsonSpec extends FlatSpec {
   {"citeObject":{"urn":"urn:cite2:hmt:e4.v1:1r","label":"Escorial Omega 1.12 folio 1r"},"citePropertyValues":[{"propertyDefUrn":"urn:cite2:hmt:e4.v1.sequence:","propertyDefLabel":"Page sequence","propertyDefVocab":"","propertyType":"NumericType","propertyUrn":"urn:cite2:hmt:e4.v1.sequence:1r","propertyValue":"1.0","propertyDefType":"NumericType"},{"propertyDefUrn":"urn:cite2:hmt:e4.v1.fakeboolean:","propertyDefLabel":"Boolean for Testing","propertyDefVocab":"","propertyType":"BooleanType","propertyUrn":"urn:cite2:hmt:e4.v1.fakeboolean:1r","propertyValue":"true","propertyDefType":"BooleanType"},{"propertyDefUrn":"urn:cite2:hmt:e4.v1.rv:","propertyDefLabel":"Recto or Verso","propertyDefVocab":"recto,verso","propertyType":"ControlledVocabType","propertyUrn":"urn:cite2:hmt:e4.v1.rv:1r","propertyValue":"recto","propertyDefType":"ControlledVocabType"}]}
   """
 
+  val vectorWithStatsString:String = """
+  {"citeObjects":[{"citeObject":{"urn":"urn:cite2:hmt:textblock.testB:1","label":"Text-block 1"},"citePropertyValues":[{"propertyDefLabel":"ImageROI","propertyDefVocab":"","propertyType":"Cite2UrnType","propertyUrn":"urn:cite2:hmt:textblock.testB.imageroi:1","propertyValue":"urn:cite2:hmt:vaimg.testB:VA012RN_0013@0.0551,0.2305,0.5115,0.494"},{"propertyDefLabel":"Image","propertyDefVocab":"","propertyType":"Cite2UrnType","propertyUrn":"urn:cite2:hmt:textblock.testB.image:1","propertyValue":"urn:cite2:hmt:vaimg.testB:VA012RN_0013"},{"propertyDefLabel":"Notes","propertyDefVocab":"","propertyType":"StringType","propertyUrn":"urn:cite2:hmt:textblock.testB.notes:1","propertyValue":" "},{"propertyDefLabel":"Folio","propertyDefVocab":"","propertyType":"Cite2UrnType","propertyUrn":"urn:cite2:hmt:textblock.testB.folio:1","propertyValue":"urn:cite2:hmt:msA.2017a:12r"}]},{"citeObject":{"urn":"urn:cite2:hmt:textblock.testA:1","label":"Text-block 1"},"citePropertyValues":[{"propertyDefLabel":"ImageROI","propertyDefVocab":"","propertyType":"Cite2UrnType","propertyUrn":"urn:cite2:hmt:textblock.testA.imageroi:1","propertyValue":"urn:cite2:hmt:vaimg.testA:VA012RN_0013@0.0551,0.2305,0.5115,0.494"},{"propertyDefLabel":"Image","propertyDefVocab":"","propertyType":"Cite2UrnType","propertyUrn":"urn:cite2:hmt:textblock.testA.image:1","propertyValue":"urn:cite2:hmt:vaimg.testA:VA012RN_0013"},{"propertyDefLabel":"Notes","propertyDefVocab":"","propertyType":"StringType","propertyUrn":"urn:cite2:hmt:textblock.testA.notes:1","propertyValue":" "},{"propertyDefLabel":"Folio","propertyDefVocab":"","propertyType":"Cite2UrnType","propertyUrn":"urn:cite2:hmt:textblock.testA.folio:1","propertyValue":"urn:cite2:hmt:msA.2017a:12r"}]}],"stats":{"total":"3","showing":"2"}}
+  """
+
   val someCiteObjectsString:String = """
   {"citeObjects":[{"citeObject":{"urn":"urn:cite2:hmt:e4.v1:1r","label":"Escorial Omega 1.12 folio 1r"},"citePropertyValues":[{"propertyDefUrn":"urn:cite2:hmt:e4.v1.sequence:","propertyDefLabel":"Page sequence","propertyDefVocab":"","propertyType":"NumericType","propertyUrn":"urn:cite2:hmt:e4.v1.sequence:1r","propertyValue":"1.0","propertyDefType":"NumericType"},{"propertyDefUrn":"urn:cite2:hmt:e4.v1.fakeboolean:","propertyDefLabel":"Boolean for Testing","propertyDefVocab":"","propertyType":"BooleanType","propertyUrn":"urn:cite2:hmt:e4.v1.fakeboolean:1r","propertyValue":"true","propertyDefType":"BooleanType"},{"propertyDefUrn":"urn:cite2:hmt:e4.v1.rv:","propertyDefLabel":"Recto or Verso","propertyDefVocab":"recto,verso","propertyType":"ControlledVocabType","propertyUrn":"urn:cite2:hmt:e4.v1.rv:1r","propertyValue":"recto","propertyDefType":"ControlledVocabType"}]},{"citeObject":{"urn":"urn:cite2:hmt:e4.v1:1v","label":"Escorial Omega 1.12 folio 1v"},"citePropertyValues":[{"propertyDefUrn":"urn:cite2:hmt:e4.v1.sequence:","propertyDefLabel":"Page sequence","propertyDefVocab":"","propertyType":"NumericType","propertyUrn":"urn:cite2:hmt:e4.v1.sequence:1v","propertyValue":"2.0","propertyDefType":"NumericType"},{"propertyDefUrn":"urn:cite2:hmt:e4.v1.fakeboolean:","propertyDefLabel":"Boolean for Testing","propertyDefVocab":"","propertyType":"BooleanType","propertyUrn":"urn:cite2:hmt:e4.v1.fakeboolean:1v","propertyValue":"true","propertyDefType":"BooleanType"},{"propertyDefUrn":"urn:cite2:hmt:e4.v1.rv:","propertyDefLabel":"Recto or Verso","propertyDefVocab":"recto,verso","propertyType":"ControlledVocabType","propertyUrn":"urn:cite2:hmt:e4.v1.rv:1v","propertyValue":"verso","propertyDefType":"ControlledVocabType"}]},{"citeObject":{"urn":"urn:cite2:hmt:e4.v1:2r","label":"Escorial Omega 1.12 folio 2r"},"citePropertyValues":[{"propertyDefUrn":"urn:cite2:hmt:e4.v1.sequence:","propertyDefLabel":"Page sequence","propertyDefVocab":"","propertyType":"NumericType","propertyUrn":"urn:cite2:hmt:e4.v1.sequence:2r","propertyValue":"3.0","propertyDefType":"NumericType"},{"propertyDefUrn":"urn:cite2:hmt:e4.v1.fakeboolean:","propertyDefLabel":"Boolean for Testing","propertyDefVocab":"","propertyType":"BooleanType","propertyUrn":"urn:cite2:hmt:e4.v1.fakeboolean:2r","propertyValue":"false","propertyDefType":"BooleanType"},{"propertyDefUrn":"urn:cite2:hmt:e4.v1.rv:","propertyDefLabel":"Recto or Verso","propertyDefVocab":"recto,verso","propertyType":"ControlledVocabType","propertyUrn":"urn:cite2:hmt:e4.v1.rv:2r","propertyValue":"recto","propertyDefType":"ControlledVocabType"}]}]}
   """
@@ -159,6 +163,46 @@ class CiteObjJsonSpec extends FlatSpec {
     assert(vco(2).urn == Cite2Urn("urn:cite2:hmt:e4.v1:2r"))
     assert(vco(0).propertyList.size == 3)
   }
+
+  it should "create a vector of CiteObjects that has stats" in {
+    val cjo:CiteObjJson = CiteObjJson()
+    assert(cjo.exists)
+    val vco:Vector[CiteObject] = cjo.vectorOfCiteObjects(vectorWithStatsString)
+    assert(vco.size == 2)
+    assert(vco(0).urn == Cite2Urn("urn:cite2:hmt:textblock.testB:1"))
+    assert(vco(0).label == "Text-block 1")
+    assert(vco(1).urn == Cite2Urn("urn:cite2:hmt:textblock.testA:1"))
+    assert(vco(1).label == "Text-block 1")
+  }
+
+  it should "create a vector of CiteObjects and report its stats" in {
+    val cjo:CiteObjJson = CiteObjJson()
+    assert(cjo.exists)
+    val vco:Vector[CiteObject] = cjo.vectorOfCiteObjects(vectorWithStatsString)
+    assert(vco.size == 2)
+    assert(vco(0).urn == Cite2Urn("urn:cite2:hmt:textblock.testB:1"))
+    assert(vco(0).label == "Text-block 1")
+    assert(vco(1).urn == Cite2Urn("urn:cite2:hmt:textblock.testA:1"))
+    assert(vco(1).label == "Text-block 1")
+    val stats:Option[Map[String,Int]] = cjo.statsForVectorOfCiteObjects(vectorWithStatsString)
+    assert( stats != None )
+    assert( stats.get("total") == 3)
+    assert( stats.get("showing") == 2)
+  }
+
+  it should "report None when a Vector of Cite Object has no stats, or mysterious ones" in {
+    val cjo:CiteObjJson = CiteObjJson()
+    assert(cjo.exists)
+    val vco:Vector[CiteObject] = cjo.vectorOfCiteObjects(someCiteObjectsString)
+    assert(vco.size == 3)
+    assert(vco(0).urn == Cite2Urn("urn:cite2:hmt:e4.v1:1r"))
+    assert(vco(0).label == "Escorial Omega 1.12 folio 1r")
+    assert(vco(2).urn == Cite2Urn("urn:cite2:hmt:e4.v1:2r"))
+    assert(vco(0).propertyList.size == 3)
+    val stats:Option[Map[String,Int]] = cjo.statsForVectorOfCiteObjects(someCiteObjectsString)
+    assert( stats == None )
+  }
+
 
   it should "create a vector of Cite2Urns" in {
     val cjo:CiteObjJson = CiteObjJson()

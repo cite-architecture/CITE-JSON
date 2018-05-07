@@ -512,7 +512,43 @@ package citejson {
         }
       }
 
-      
+      /** Returns an Option[Map[String,Int]]
+      * 
+      * @param jsonString JSON String
+      */
+      def statsForVectorOfCiteObjects(jsonString:String):Option[Map[String,Int]] = {
+       try {
+          val doc: Json = parse(jsonString).getOrElse(Json.Null)
+          val stats:Option[Map[String,Int]] = statsForVectorOfCiteObjects(doc)
+          stats 
+        } catch {
+          case e:Exception =>  throw new CiteJsonException(s"${e}")
+        }
+      }
+
+       /** Returns an Option[Map[String,Int]]
+      *
+      * @param doc io.circe.Json
+      */
+      def statsForVectorOfCiteObjects(doc:io.circe.Json):Option[Map[String,Int]] = {
+        try {
+          if(doc == Json.Null) throw new CiteJsonException(s"Null JSON")
+          // We need a cursor to get stuff
+          val cursor: HCursor = doc.hcursor
+          val statsJson = cursor.downField("stats").as[Map[String,Int]]
+          val stats:Option[Map[String,Int]] = {
+            statsJson match {
+              case Right(m) => Some(m)
+              case Left(er) => None
+            } 
+          }
+          stats
+        } catch {
+          case e:Exception =>  throw new CiteJsonException(s"${e}")
+        }
+      }
+
+
       /** Returns a Vector[CiteObject]
       *
       * @param jsonString JSON string
