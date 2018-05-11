@@ -2,7 +2,8 @@ package edu.holycross.shot.citejson
 
 import edu.holycross.shot.cite._
 import edu.holycross.shot.citeobj._
-import edu.holycross.shot.scm._
+import edu.holycross.shot.scm._ 
+import edu.holycross.shot.dse._ 
 import cats.syntax.either._
 import io.circe._, io.circe.generic.auto._, io.circe.parser._, io.circe.syntax._
 import org.scalatest.FlatSpec
@@ -46,6 +47,116 @@ class CiteObjJsonSpec extends FlatSpec {
 
   val someCiteObjectsString:String = """
   {"citeObjects":[{"citeObject":{"urn":"urn:cite2:hmt:e4.v1:1r","label":"Escorial Omega 1.12 folio 1r"},"citePropertyValues":[{"propertyDefUrn":"urn:cite2:hmt:e4.v1.sequence:","propertyDefLabel":"Page sequence","propertyDefVocab":"","propertyType":"NumericType","propertyUrn":"urn:cite2:hmt:e4.v1.sequence:1r","propertyValue":"1.0","propertyDefType":"NumericType"},{"propertyDefUrn":"urn:cite2:hmt:e4.v1.fakeboolean:","propertyDefLabel":"Boolean for Testing","propertyDefVocab":"","propertyType":"BooleanType","propertyUrn":"urn:cite2:hmt:e4.v1.fakeboolean:1r","propertyValue":"true","propertyDefType":"BooleanType"},{"propertyDefUrn":"urn:cite2:hmt:e4.v1.rv:","propertyDefLabel":"Recto or Verso","propertyDefVocab":"recto,verso","propertyType":"ControlledVocabType","propertyUrn":"urn:cite2:hmt:e4.v1.rv:1r","propertyValue":"recto","propertyDefType":"ControlledVocabType"}]},{"citeObject":{"urn":"urn:cite2:hmt:e4.v1:1v","label":"Escorial Omega 1.12 folio 1v"},"citePropertyValues":[{"propertyDefUrn":"urn:cite2:hmt:e4.v1.sequence:","propertyDefLabel":"Page sequence","propertyDefVocab":"","propertyType":"NumericType","propertyUrn":"urn:cite2:hmt:e4.v1.sequence:1v","propertyValue":"2.0","propertyDefType":"NumericType"},{"propertyDefUrn":"urn:cite2:hmt:e4.v1.fakeboolean:","propertyDefLabel":"Boolean for Testing","propertyDefVocab":"","propertyType":"BooleanType","propertyUrn":"urn:cite2:hmt:e4.v1.fakeboolean:1v","propertyValue":"true","propertyDefType":"BooleanType"},{"propertyDefUrn":"urn:cite2:hmt:e4.v1.rv:","propertyDefLabel":"Recto or Verso","propertyDefVocab":"recto,verso","propertyType":"ControlledVocabType","propertyUrn":"urn:cite2:hmt:e4.v1.rv:1v","propertyValue":"verso","propertyDefType":"ControlledVocabType"}]},{"citeObject":{"urn":"urn:cite2:hmt:e4.v1:2r","label":"Escorial Omega 1.12 folio 2r"},"citePropertyValues":[{"propertyDefUrn":"urn:cite2:hmt:e4.v1.sequence:","propertyDefLabel":"Page sequence","propertyDefVocab":"","propertyType":"NumericType","propertyUrn":"urn:cite2:hmt:e4.v1.sequence:2r","propertyValue":"3.0","propertyDefType":"NumericType"},{"propertyDefUrn":"urn:cite2:hmt:e4.v1.fakeboolean:","propertyDefLabel":"Boolean for Testing","propertyDefVocab":"","propertyType":"BooleanType","propertyUrn":"urn:cite2:hmt:e4.v1.fakeboolean:2r","propertyValue":"false","propertyDefType":"BooleanType"},{"propertyDefUrn":"urn:cite2:hmt:e4.v1.rv:","propertyDefLabel":"Recto or Verso","propertyDefVocab":"recto,verso","propertyType":"ControlledVocabType","propertyUrn":"urn:cite2:hmt:e4.v1.rv:2r","propertyValue":"recto","propertyDefType":"ControlledVocabType"}]}]}
+  """
+
+  val dsesForCiteObject:String = """
+{
+    "citeObjects": [{
+        "citeObject": {
+            "urn": "urn:cite2:hmt:msA.v1:12r",
+            "label": "Venetus A (Marciana 454 = 822), folio 12, recto"
+        },
+        "citePropertyValues": [
+            {
+                "propertyDefLabel": "TBS image",
+                "propertyDefVocab": "",
+                "propertyType": "Cite2UrnType",
+                "propertyUrn": "urn:cite2:hmt:msA.v1.image:12r",
+                "propertyValue": "urn:cite2:hmt:vaimg.2017a:VA012RN_0013"
+            },
+            {
+                "propertyDefLabel": "Page sequence",
+                "propertyDefVocab": "",
+                "propertyType": "NumericType",
+                "propertyUrn": "urn:cite2:hmt:msA.v1.sequence:12r",
+                "propertyValue": "23.0"
+            },
+            {
+                "propertyDefLabel": "Recto or Verso",
+                "propertyDefVocab": "recto,verso",
+                "propertyType": "ControlledVocabType",
+                "propertyUrn": "urn:cite2:hmt:msA.v1.rv:12r",
+                "propertyValue": "recto"
+            }
+        ]
+    }],
+    "stats": {
+        "total": "1",
+        "showing": "1"
+    },
+    "dse": {"dseRecords": [
+        {
+            "imageroi": "urn:cite2:hmt:vaimg.2017a:VA012RN_0013@0.41542574,0.65997706,0.08476518,0.01060780",
+            "surface": "urn:cite2:hmt:msA.v1:12r",
+            "label": "DSE record for scholion msAil 1.330",
+            "passage": "urn:cts:greekLit:tlg5026.msAil.hmt:1.330",
+            "citeObject": {
+                "citeObject": {
+                    "urn": "urn:cite2:hmt:va_dse.v1:schol396",
+                    "label": "DSE record for scholion msAil 1.330"
+                },
+                "citePropertyValues": [
+                    {
+                        "propertyDefLabel": "Image region of interest",
+                        "propertyDefVocab": "",
+                        "propertyType": "Cite2UrnType",
+                        "propertyUrn": "urn:cite2:hmt:va_dse.v1.imageroi:schol396",
+                        "propertyValue": "urn:cite2:hmt:vaimg.2017a:VA012RN_0013@0.41542574,0.65997706,0.08476518,0.01060780"
+                    },
+                    {
+                        "propertyDefLabel": "Artifact surface",
+                        "propertyDefVocab": "",
+                        "propertyType": "Cite2UrnType",
+                        "propertyUrn": "urn:cite2:hmt:va_dse.v1.surface:schol396",
+                        "propertyValue": "urn:cite2:hmt:msA.v1:12r"
+                    },
+                    {
+                        "propertyDefLabel": "Text passage",
+                        "propertyDefVocab": "",
+                        "propertyType": "CtsUrnType",
+                        "propertyUrn": "urn:cite2:hmt:va_dse.v1.passage:schol396",
+                        "propertyValue": "urn:cts:greekLit:tlg5026.msAil.hmt:1.330"
+                    }
+                ]
+            }
+        },
+        {
+            "imageroi": "urn:cite2:hmt:vaimg.2017a:VA012RN_0013@0.1582,0.6036,0.3864,0.0278",
+            "surface": "urn:cite2:hmt:msA.v1:12r",
+            "label": "DSE record for Iliad 1.20",
+            "passage": "urn:cts:greekLit:tlg0012.tlg001.msA:1.20",
+            "citeObject": {
+                "citeObject": {
+                    "urn": "urn:cite2:hmt:va_dse.v1:il29",
+                    "label": "DSE record for Iliad 1.20"
+                },
+                "citePropertyValues": [
+                    {
+                        "propertyDefLabel": "Image region of interest",
+                        "propertyDefVocab": "",
+                        "propertyType": "Cite2UrnType",
+                        "propertyUrn": "urn:cite2:hmt:va_dse.v1.imageroi:il29",
+                        "propertyValue": "urn:cite2:hmt:vaimg.2017a:VA012RN_0013@0.1582,0.6036,0.3864,0.0278"
+                    },
+                    {
+                        "propertyDefLabel": "Artifact surface",
+                        "propertyDefVocab": "",
+                        "propertyType": "Cite2UrnType",
+                        "propertyUrn": "urn:cite2:hmt:va_dse.v1.surface:il29",
+                        "propertyValue": "urn:cite2:hmt:msA.v1:12r"
+                    },
+                    {
+                        "propertyDefLabel": "Text passage",
+                        "propertyDefVocab": "",
+                        "propertyType": "CtsUrnType",
+                        "propertyUrn": "urn:cite2:hmt:va_dse.v1.passage:il29",
+                        "propertyValue": "urn:cts:greekLit:tlg0012.tlg001.msA:1.20"
+                    }
+                ]
+            }
+        }
+    ]}
+}
   """
 
   val cite2UrnStringJson:String = """
@@ -203,7 +314,6 @@ class CiteObjJsonSpec extends FlatSpec {
     assert( stats == None )
   }
 
-
   it should "create a vector of Cite2Urns" in {
     val cjo:CiteObjJson = CiteObjJson()
     assert(cjo.exists)
@@ -211,6 +321,16 @@ class CiteObjJsonSpec extends FlatSpec {
     assert(vcu.size == 2)
     assert(vcu(0) == Cite2Urn("urn:cite2:hmt:compimg.v1:"))
     assert(vcu(1) == Cite2Urn("urn:cite2:hmt:vaimg.2017a:"))
+  }
+
+  it should "parse a VectorOfDseRecords as part of a VectorOfCiteObjects reply" in {
+     val cjo:CiteObjJson = CiteObjJson()
+    assert(cjo.exists)
+    val optDse:Option[Vector[DseRecord]] = cjo.dsesForVectorOfCiteObjects(dsesForCiteObject)
+    assert(optDse != None)
+    assert(optDse.get.size == 2)
+    assert(optDse.get(0).surface == Cite2Urn("urn:cite2:hmt:msA.v1:12r"))
+    assert(optDse.get(1).citeObject.urn == Cite2Urn("urn:cite2:hmt:va_dse.v1:il29"))
   }
 
   

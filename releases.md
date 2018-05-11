@@ -1,5 +1,7 @@
 # citejson: release notes
 
+**2.6.0**:  Added parsing for optional DSE map attached to a Vector of CiteObjects or Corpus.
+
 **2.5.0**:  Added parsing for optional stats map attached to a Vector of CiteObjects
 
 **2.4.0**:  Added parsing DseRecord and Vector[DseRecord]
