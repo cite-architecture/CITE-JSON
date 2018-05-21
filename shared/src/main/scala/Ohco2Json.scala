@@ -4,6 +4,7 @@ import scala.scalajs.js.annotation._
 import edu.holycross.shot.cite._
 import edu.holycross.shot.ohco2._
 import edu.holycross.shot.dse._
+import edu.holycross.shot.citerelation._
 import io.circe._, io.circe.generic.auto._, io.circe.parser._, io.circe.syntax._
 import io.circe.parser.decode
 import io.circe.optics.JsonPath._
@@ -385,7 +386,7 @@ package citejson {
         }
       }
 
-        def dsesForCorpus(jsonString:String):Option[Vector[DseRecord]] = {
+      def dsesForCorpus(jsonString:String):Option[Vector[DseRecord]] = {
         try {
           val doc: Json = parse(jsonString).getOrElse(Json.Null)
           val dseRec:Option[Vector[DseRecord]] = dsesForCorpus(doc)
@@ -407,6 +408,42 @@ package citejson {
               case Right(j) => {
                 val cjo:DseJson = DseJson()
                 val testParse = cjo.parseVectorOfDseRecords(j)
+                testParse.size match {
+                  case n if (n > 0) => Some(testParse)
+                  case _ => None
+                }
+              }
+              case Left(_) => None
+            }
+          }
+          returnVec
+        } catch {
+          case e:Exception =>  throw new CiteJsonException(s"${e}")
+        }
+      } 
+
+      def commentaryForCorpus(jsonString:String):Option[Vector[CiteTriple]] = {
+        try {
+          val doc: Json = parse(jsonString).getOrElse(Json.Null)
+          val dseRec:Option[Vector[CiteTriple]] = commentaryForCorpus(doc)
+          dseRec 
+        } catch {
+          case e:Exception =>  throw new CiteJsonException(s"${e}")
+        }
+      }     
+
+      def commentaryForCorpus(doc:io.circe.Json):Option[Vector[CiteTriple]] = {
+        try {
+          if(doc == Json.Null) throw new CiteJsonException(s"Null JSON")
+          // We need a cursor to get stuff
+          val cursor: HCursor = doc.hcursor
+          val dseRecsJson = cursor.downField("commentary").as[Json]
+          //println(s"dseRecsJson: ${dseRecsJson}")
+          val returnVec:Option[Vector[CiteTriple]] = {
+            dseRecsJson match {
+              case Right(j) => {
+                val cjo:RelationsJson = RelationsJson()
+                val testParse = cjo.parseVectorOfCiteTriples(j)
                 testParse.size match {
                   case n if (n > 0) => Some(testParse)
                   case _ => None
