@@ -1,5 +1,7 @@
 # citejson: release notes
 
+**2.8.0**: Reworked `build.sbt`. Updated many dependencies.
+
 **2.7.0**:  Added parsing for `CiteTriple`, `Vector[CiteTriple]`, and `Option[Vector[CiteTriple]]` possibly attached to a `CorpusJson`.
 
 **2.6.0**:  Added parsing for optional DSE map attached to a Vector of CiteObjects or Corpus.
