@@ -1,5 +1,7 @@
 # citejson: release notes
 
+**2.8.0**: OHCO2 10.12.5 and xCite 4.0.2.
+
 **2.8.0**: Reworked `build.sbt`. Updated many dependencies.
 
 **2.7.0**:  Added parsing for `CiteTriple`, `Vector[CiteTriple]`, and `Option[Vector[CiteTriple]]` possibly attached to a `CorpusJson`.
