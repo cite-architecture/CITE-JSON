@@ -1,6 +1,5 @@
 name := "Cross-compiled CITE JSON library"
 
-// Depends on libraries that only work under 2.12?
 crossScalaVersions in ThisBuild := Seq( "2.12.8")
 scalaVersion := (crossScalaVersions in ThisBuild).value.last
 
@@ -21,9 +20,10 @@ lazy val crossed = crossProject.in(file(".")).
     settings(
       name := "citejson",
       organization := "edu.holycross.shot",
-      version := "2.9.0",
+      version := "2.10.0",
       licenses += ("GPL-3.0",url("https://opensource.org/licenses/gpl-3.0.html")),
       resolvers += Resolver.jcenterRepo,
+      resolvers += Resolver.bintrayRepo("eumaeus", "maven"),
       resolvers += Resolver.bintrayRepo("neelsmith", "maven"),
       retrieveManaged := true,
       libraryDependencies ++= Seq(
@@ -33,7 +33,7 @@ lazy val crossed = crossProject.in(file(".")).
         "edu.holycross.shot" %%% "citeobj" % "7.3.0",
         "edu.holycross.shot" %%% "citerelations" % "2.4.0",
         "edu.holycross.shot" %%% "ohco2" % "10.12.5",
-        "edu.holycross.shot" %%% "dse" % "3.0.0",
+        "edu.holycross.shot" %%% "dse" % "3.1.0",
         "edu.holycross.shot" %%% "scm" % "6.2.0"
       ),
       libraryDependencies ++= Seq(
