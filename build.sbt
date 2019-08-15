@@ -13,7 +13,7 @@ lazy val root = project.in(file(".")).
       publishLocal := {}
     )
     
-val circeVersion = "0.10.0"
+val circeVersion = "0.11.0"
 
 
 lazy val crossed = crossProject.in(file(".")).

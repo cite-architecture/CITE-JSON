@@ -28,10 +28,10 @@ package citejson {
       *
       * @param jsonString JSON string
       */
-      def parseCiteTriple(jsonString:String):CiteTriple = {
+      def parseCiteTriple(jsonString: String):CiteTriple = {
         try {
           val doc: Json = parse(jsonString).getOrElse(Json.Null)
-          val citeTriple:CiteTriple = parseCiteTriple(doc)
+          val citeTriple: CiteTriple = parseCiteTriple(doc)
           citeTriple
         } catch {
           case e:Exception =>  throw new CiteJsonException(s"parseVectorOfDseRecords: Failed with string param ${jsonString} :: ${e}")
@@ -116,16 +116,16 @@ package citejson {
           // We need a cursor to get stuff
           val cursor: HCursor = doc.hcursor
           val ctString = cursor.downField("citeTriples").as[List[Json]]
-          val ctList:List[Json] = {
+          val ctList: List[Json] = {
             ctString match {
               case Right(ccd) => ccd
               case _ => throw new CiteJsonException("Failed to parse JSON into list of DseRecord JSON objects.")
             }
           }
           // Make Vector here!
-          val ctVec:Vector[CiteTriple] = {
+          val ctVec: Vector[CiteTriple] = {
             ctList.map( ct => {
-              val citeTriple:CiteTriple = parseCiteTriple(ct)
+              val citeTriple: CiteTriple = parseCiteTriple(ct)
               citeTriple
             }).toVector
           }

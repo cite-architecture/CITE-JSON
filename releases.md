@@ -1,6 +1,8 @@
 # citejson: release notes
 
-**2.8.0**: OHCO2 10.12.5 and xCite 4.0.2.
+**2.10.0**: Updated versions of Circe dependencies.
+
+**2.9.0**: OHCO2 10.12.5 and xCite 4.0.2.
 
 **2.8.0**: Reworked `build.sbt`. Updated many dependencies.
 
