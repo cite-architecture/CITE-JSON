@@ -51,111 +51,213 @@ class CiteObjJsonSpec extends FlatSpec {
 
   val dsesForCiteObject:String = """
 {
-    "citeObjects": [{
-        "citeObject": {
-            "urn": "urn:cite2:hmt:msA.v1:12r",
-            "label": "Venetus A (Marciana 454 = 822), folio 12, recto"
-        },
-        "citePropertyValues": [
-            {
-                "propertyDefLabel": "TBS image",
-                "propertyDefVocab": "",
-                "propertyType": "Cite2UrnType",
-                "propertyUrn": "urn:cite2:hmt:msA.v1.image:12r",
-                "propertyValue": "urn:cite2:hmt:vaimg.2017a:VA012RN_0013"
-            },
-            {
-                "propertyDefLabel": "Page sequence",
-                "propertyDefVocab": "",
-                "propertyType": "NumericType",
-                "propertyUrn": "urn:cite2:hmt:msA.v1.sequence:12r",
-                "propertyValue": "23.0"
-            },
-            {
-                "propertyDefLabel": "Recto or Verso",
-                "propertyDefVocab": "recto,verso",
-                "propertyType": "ControlledVocabType",
-                "propertyUrn": "urn:cite2:hmt:msA.v1.rv:12r",
-                "propertyValue": "recto"
-            }
-        ]
-    }],
-    "stats": {
-        "total": "1",
-        "showing": "1"
-    },
-    "dse": {"dseRecords": [
+  "citeObjects": [
+    {
+      "citeObject": {
+        "urn": "urn:cite2:hmt:msA.v1:12r",
+        "label": "Marcianus Graecus Z. 454 (= 822) (Venetus A) folio 12r"
+      },
+      "citePropertyValues": [
         {
-            "imageroi": "urn:cite2:hmt:vaimg.2017a:VA012RN_0013@0.41542574,0.65997706,0.08476518,0.01060780",
-            "surface": "urn:cite2:hmt:msA.v1:12r",
-            "label": "DSE record for scholion msAil 1.330",
-            "passage": "urn:cts:greekLit:tlg5026.msAil.hmt:1.330",
-            "citeObject": {
-                "citeObject": {
-                    "urn": "urn:cite2:hmt:va_dse.v1:schol396",
-                    "label": "DSE record for scholion msAil 1.330"
-                },
-                "citePropertyValues": [
-                    {
-                        "propertyDefLabel": "Image region of interest",
-                        "propertyDefVocab": "",
-                        "propertyType": "Cite2UrnType",
-                        "propertyUrn": "urn:cite2:hmt:va_dse.v1.imageroi:schol396",
-                        "propertyValue": "urn:cite2:hmt:vaimg.2017a:VA012RN_0013@0.41542574,0.65997706,0.08476518,0.01060780"
-                    },
-                    {
-                        "propertyDefLabel": "Artifact surface",
-                        "propertyDefVocab": "",
-                        "propertyType": "Cite2UrnType",
-                        "propertyUrn": "urn:cite2:hmt:va_dse.v1.surface:schol396",
-                        "propertyValue": "urn:cite2:hmt:msA.v1:12r"
-                    },
-                    {
-                        "propertyDefLabel": "Text passage",
-                        "propertyDefVocab": "",
-                        "propertyType": "CtsUrnType",
-                        "propertyUrn": "urn:cite2:hmt:va_dse.v1.passage:schol396",
-                        "propertyValue": "urn:cts:greekLit:tlg5026.msAil.hmt:1.330"
-                    }
-                ]
-            }
+          "propertyDefLabel": "ImageROI",
+          "propertyDefVocab": "",
+          "propertyType": "Cite2UrnType",
+          "propertyUrn": "urn:cite2:hmt:msA.v1.imageROI:12r",
+          "propertyValue": "urn:cite2:hmt:vaimg.2017a:VA012RN_0013@0.208,0.2087,0.086,0.0225"
         },
         {
-            "imageroi": "urn:cite2:hmt:vaimg.2017a:VA012RN_0013@0.1582,0.6036,0.3864,0.0278",
-            "surface": "urn:cite2:hmt:msA.v1:12r",
-            "label": "DSE record for Iliad 1.20",
-            "passage": "urn:cts:greekLit:tlg0012.tlg001.msA:1.20",
-            "citeObject": {
-                "citeObject": {
-                    "urn": "urn:cite2:hmt:va_dse.v1:il29",
-                    "label": "DSE record for Iliad 1.20"
-                },
-                "citePropertyValues": [
-                    {
-                        "propertyDefLabel": "Image region of interest",
-                        "propertyDefVocab": "",
-                        "propertyType": "Cite2UrnType",
-                        "propertyUrn": "urn:cite2:hmt:va_dse.v1.imageroi:il29",
-                        "propertyValue": "urn:cite2:hmt:vaimg.2017a:VA012RN_0013@0.1582,0.6036,0.3864,0.0278"
-                    },
-                    {
-                        "propertyDefLabel": "Artifact surface",
-                        "propertyDefVocab": "",
-                        "propertyType": "Cite2UrnType",
-                        "propertyUrn": "urn:cite2:hmt:va_dse.v1.surface:il29",
-                        "propertyValue": "urn:cite2:hmt:msA.v1:12r"
-                    },
-                    {
-                        "propertyDefLabel": "Text passage",
-                        "propertyDefVocab": "",
-                        "propertyType": "CtsUrnType",
-                        "propertyUrn": "urn:cite2:hmt:va_dse.v1.passage:il29",
-                        "propertyValue": "urn:cts:greekLit:tlg0012.tlg001.msA:1.20"
-                    }
-                ]
-            }
+          "propertyDefLabel": "Image",
+          "propertyDefVocab": "",
+          "propertyType": "Cite2UrnType",
+          "propertyUrn": "urn:cite2:hmt:msA.v1.image:12r",
+          "propertyValue": "urn:cite2:hmt:vaimg.2017a:VA012RN_0013"
+        },
+        {
+          "propertyDefLabel": "Text",
+          "propertyDefVocab": "",
+          "propertyType": "CtsUrnType",
+          "propertyUrn": "urn:cite2:hmt:msA.v1.text:12r",
+          "propertyValue": "urn:cts:greekLit:tlg0012.tlg001.allen:1.1-1.25"
+        },
+        {
+          "propertyDefLabel": "Manuscript siglum",
+          "propertyDefVocab": "",
+          "propertyType": "StringType",
+          "propertyUrn": "urn:cite2:hmt:msA.v1.siglum:12r",
+          "propertyValue": "msA"
+        },
+        {
+          "propertyDefLabel": "Page sequence",
+          "propertyDefVocab": "",
+          "propertyType": "NumericType",
+          "propertyUrn": "urn:cite2:hmt:msA.v1.sequence:12r",
+          "propertyValue": "8.0"
+        },
+        {
+          "propertyDefLabel": "Recto or Verso",
+          "propertyDefVocab": "recto,verso",
+          "propertyType": "ControlledVocabType",
+          "propertyUrn": "urn:cite2:hmt:msA.v1.rv:12r",
+          "propertyValue": "recto"
+        },
+        {
+          "propertyDefLabel": "Codex URN",
+          "propertyDefVocab": "",
+          "propertyType": "Cite2UrnType",
+          "propertyUrn": "urn:cite2:hmt:msA.v1.codex:12r",
+          "propertyValue": "urn:cite2:hmt:codex:msA"
         }
-    ]}
+      ]
+    }
+  ],
+  "dse": {
+    "dseRecords": [
+      {
+        "imageroi": "urn:cite2:hmt:vaimg.2017a:VA012RN_0013@0.57426499,0.19896789,0.20962199,0.02350917",
+        "label": "DSE record for scholion msA 1.4",
+        "passage": "urn:cts:greekLit:tlg5026.msA.hmt:1.4",
+        "surface": "urn:cite2:hmt:msA.v1:12r",
+        "urn": "urn:cite2:hmt:va_dse.v1:schol3"
+      },
+      {
+        "imageroi": "urn:cite2:hmt:vaimg.2017a:VA012RN_0013@0.09125620,0.11955275,0.70064910,0.06909404",
+        "label": "DSE record for scholion msA 1.1",
+        "passage": "urn:cts:greekLit:tlg5026.msA.hmt:1.1",
+        "surface": "urn:cite2:hmt:msA.v1:12r",
+        "urn": "urn:cite2:hmt:va_dse.v1:schol0"
+      },
+      {
+        "imageroi": "urn:cite2:hmt:vaimg.2017a:VA012RN_0013@0.56166476,0.49541284,0.21114929,0.02637615",
+        "label": "DSE record for scholion msA 1.9",
+        "passage": "urn:cts:greekLit:tlg5026.msA.hmt:1.9",
+        "surface": "urn:cite2:hmt:msA.v1:12r",
+        "urn": "urn:cite2:hmt:va_dse.v1:schol8"
+      },
+      {
+        "imageroi": "urn:cite2:hmt:vaimg.2017a:VA012RN_0013@0.57311951,0.24827982,0.22451317,0.04644495",
+        "label": "DSE record for scholion msA 1.6",
+        "passage": "urn:cts:greekLit:tlg5026.msA.hmt:1.6",
+        "surface": "urn:cite2:hmt:msA.v1:12r",
+        "urn": "urn:cite2:hmt:va_dse.v1:schol5"
+      },
+      {
+        "imageroi": "urn:cite2:hmt:vaimg.2017a:VA012RN_0013@0.16265750,0.18721330,0.62733868,0.02752294",
+        "label": "DSE record for scholion msA 1.3",
+        "passage": "urn:cts:greekLit:tlg5026.msA.hmt:1.3",
+        "surface": "urn:cite2:hmt:msA.v1:12r",
+        "urn": "urn:cite2:hmt:va_dse.v1:schol2"
+      },
+      {
+        "imageroi": "urn:cite2:hmt:vaimg.2017a:VA012RN_0013@0.1632,0.3116,0.3273,0.0255",
+        "label": "DSE record for Iliad 1.5",
+        "passage": "urn:cts:greekLit:tlg0012.tlg001.msA:1.5",
+        "surface": "urn:cite2:hmt:msA.v1:12r",
+        "urn": "urn:cite2:hmt:va_dse.v1:il14"
+      },
+      {
+        "imageroi": "urn:cite2:hmt:vaimg.2017a:VA012RN_0013@0.56166476,0.39650229,0.25200458,0.10149083",
+        "label": "DSE record for scholion msA 1.8",
+        "passage": "urn:cts:greekLit:tlg5026.msA.hmt:1.8",
+        "surface": "urn:cite2:hmt:msA.v1:12r",
+        "urn": "urn:cite2:hmt:va_dse.v1:schol7"
+      },
+      {
+        "imageroi": "urn:cite2:hmt:vaimg.2017a:VA012RN_0013@0.0611,0.2252,0.4675,0.0901",
+        "label": "DSE record for Iliad 1.1",
+        "passage": "urn:cts:greekLit:tlg0012.tlg001.msA:1.1",
+        "surface": "urn:cite2:hmt:msA.v1:12r",
+        "urn": "urn:cite2:hmt:va_dse.v1:il10"
+      },
+      {
+        "imageroi": "urn:cite2:hmt:vaimg.2017a:VA012RN_0013@0.1632,0.4069,0.3664,0.0278",
+        "label": "DSE record for Iliad 1.10",
+        "passage": "urn:cts:greekLit:tlg0012.tlg001.msA:1.10",
+        "surface": "urn:cite2:hmt:msA.v1:12r",
+        "urn": "urn:cite2:hmt:va_dse.v1:il19"
+      },
+      {
+        "imageroi": "urn:cite2:hmt:vaimg.2017a:VA012RN_0013@0.16265750,0.17631881,0.62733868,0.02494266",
+        "label": "DSE record for scholion msA 1.2",
+        "passage": "urn:cts:greekLit:tlg5026.msA.hmt:1.2",
+        "surface": "urn:cite2:hmt:msA.v1:12r",
+        "urn": "urn:cite2:hmt:va_dse.v1:schol1"
+      },
+      {
+        "imageroi": "urn:cite2:hmt:vaimg.2017a:VA012RN_0013@0.1652,0.2905,0.3463,0.0255",
+        "label": "DSE record for Iliad 1.4",
+        "passage": "urn:cts:greekLit:tlg0012.tlg001.msA:1.4",
+        "surface": "urn:cite2:hmt:msA.v1:12r",
+        "urn": "urn:cite2:hmt:va_dse.v1:il13"
+      },
+      {
+        "imageroi": "urn:cite2:hmt:vaimg.2017a:VA012RN_0013@0.1592,0.3874,0.3664,0.0278",
+        "label": "DSE record for Iliad 1.9",
+        "passage": "urn:cts:greekLit:tlg0012.tlg001.msA:1.9",
+        "surface": "urn:cite2:hmt:msA.v1:12r",
+        "urn": "urn:cite2:hmt:va_dse.v1:il18"
+      },
+      {
+        "imageroi": "urn:cite2:hmt:vaimg.2017a:VA012RN_0013@0.1642,0.2725,0.3323,0.0248",
+        "label": "DSE record for Iliad 1.3",
+        "passage": "urn:cts:greekLit:tlg0012.tlg001.msA:1.3",
+        "surface": "urn:cite2:hmt:msA.v1:12r",
+        "urn": "urn:cite2:hmt:va_dse.v1:il12"
+      },
+      {
+        "imageroi": "urn:cite2:hmt:vaimg.2017a:VA012RN_0013@0.1632,0.3288,0.3373,0.0255",
+        "label": "DSE record for Iliad 1.6",
+        "passage": "urn:cts:greekLit:tlg0012.tlg001.msA:1.6",
+        "surface": "urn:cite2:hmt:msA.v1:12r",
+        "urn": "urn:cite2:hmt:va_dse.v1:il15"
+      },
+      {
+        "imageroi": "urn:cite2:hmt:vaimg.2017a:VA012RN_0013@0.56510118,0.20871560,0.22451317,0.05160550",
+        "label": "DSE record for scholion msA 1.5",
+        "passage": "urn:cts:greekLit:tlg5026.msA.hmt:1.5",
+        "surface": "urn:cite2:hmt:msA.v1:12r",
+        "urn": "urn:cite2:hmt:va_dse.v1:schol4"
+      },
+      {
+        "imageroi": "urn:cite2:hmt:vaimg.2017a:VA012RN_0013@0.56204658,0.29386468,0.23864070,0.10693807",
+        "label": "DSE record for scholion msA 1.7",
+        "passage": "urn:cts:greekLit:tlg5026.msA.hmt:1.7",
+        "surface": "urn:cite2:hmt:msA.v1:12r",
+        "urn": "urn:cite2:hmt:va_dse.v1:schol6"
+      },
+      {
+        "imageroi": "urn:cite2:hmt:vaimg.2017a:VA012RN_0013@0.1612,0.3701,0.3604,0.0255",
+        "label": "DSE record for Iliad 1.8",
+        "passage": "urn:cts:greekLit:tlg0012.tlg001.msA:1.8",
+        "surface": "urn:cite2:hmt:msA.v1:12r",
+        "urn": "urn:cite2:hmt:va_dse.v1:il17"
+      },
+      {
+        "imageroi": "urn:cite2:hmt:vaimg.2017a:VA012RN_0013@0.1642,0.3498,0.3534,0.0255",
+        "label": "DSE record for Iliad 1.7",
+        "passage": "urn:cts:greekLit:tlg0012.tlg001.msA:1.7",
+        "surface": "urn:cite2:hmt:msA.v1:12r",
+        "urn": "urn:cite2:hmt:va_dse.v1:il16"
+      },
+      {
+        "imageroi": "urn:cite2:hmt:vaimg.2017a:VA012RN_0013@0.57082856,0.50802752,0.22336770,0.06192661",
+        "label": "DSE record for scholion msA 1.10",
+        "passage": "urn:cts:greekLit:tlg5026.msA.hmt:1.10",
+        "surface": "urn:cite2:hmt:msA.v1:12r",
+        "urn": "urn:cite2:hmt:va_dse.v1:schol9"
+      },
+      {
+        "imageroi": "urn:cite2:hmt:vaimg.2017a:VA012RN_0013@0.1632,0.2523,0.3323,0.0248",
+        "label": "DSE record for Iliad 1.2",
+        "passage": "urn:cts:greekLit:tlg0012.tlg001.msA:1.2",
+        "surface": "urn:cite2:hmt:msA.v1:12r",
+        "urn": "urn:cite2:hmt:va_dse.v1:il11"
+      }
+    ]
+  },
+  "stats": {
+    "total": "1",
+    "showing": "1"
+  }
 }
   """
 
@@ -323,14 +425,14 @@ class CiteObjJsonSpec extends FlatSpec {
     assert(vcu(1) == Cite2Urn("urn:cite2:hmt:vaimg.2017a:"))
   }
 
-  it should "parse a VectorOfDseRecords as part of a VectorOfCiteObjects reply" in {
+  it should "parse a VectorOfDsePassages as part of a VectorOfCiteObjects reply" in {
      val cjo:CiteObjJson = CiteObjJson()
     assert(cjo.exists)
-    val optDse:Option[Vector[DseRecord]] = cjo.dsesForVectorOfCiteObjects(dsesForCiteObject)
+    val optDse:Option[Vector[DsePassage]] = cjo.dsesForVectorOfCiteObjects(dsesForCiteObject)
     assert(optDse != None)
-    assert(optDse.get.size == 2)
+    assert(optDse.get.size == 20)
     assert(optDse.get(0).surface == Cite2Urn("urn:cite2:hmt:msA.v1:12r"))
-    assert(optDse.get(1).citeObject.urn == Cite2Urn("urn:cite2:hmt:va_dse.v1:il29"))
+    assert(optDse.get(1).urn == Cite2Urn("urn:cite2:hmt:va_dse.v1:schol0"))
   }
 
   

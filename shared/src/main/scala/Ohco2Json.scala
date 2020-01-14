@@ -7,7 +7,6 @@ import edu.holycross.shot.dse._
 import edu.holycross.shot.citerelation._
 import io.circe._, io.circe.generic.auto._, io.circe.parser._, io.circe.syntax._
 import io.circe.parser.decode
-import io.circe.optics.JsonPath._
 
 package citejson {
 
@@ -386,28 +385,28 @@ package citejson {
         }
       }
 
-      def dsesForCorpus(jsonString:String):Option[Vector[DseRecord]] = {
+      def dsesForCorpus(jsonString:String):Option[Vector[DsePassage]] = {
         try {
           val doc: Json = parse(jsonString).getOrElse(Json.Null)
-          val dseRec:Option[Vector[DseRecord]] = dsesForCorpus(doc)
+          val dseRec:Option[Vector[DsePassage]] = dsesForCorpus(doc)
           dseRec 
         } catch {
           case e:Exception =>  throw new CiteJsonException(s"${e}")
         }
       }     
 
-      def dsesForCorpus(doc:io.circe.Json):Option[Vector[DseRecord]] = {
+      def dsesForCorpus(doc:io.circe.Json):Option[Vector[DsePassage]] = {
         try {
           if(doc == Json.Null) throw new CiteJsonException(s"Null JSON")
           // We need a cursor to get stuff
           val cursor: HCursor = doc.hcursor
           val dseRecsJson = cursor.downField("dse").as[Json]
           //println(s"dseRecsJson: ${dseRecsJson}")
-          val returnVec:Option[Vector[DseRecord]] = {
+          val returnVec:Option[Vector[DsePassage]] = {
             dseRecsJson match {
               case Right(j) => {
                 val cjo:DseJson = DseJson()
-                val testParse = cjo.parseVectorOfDseRecords(j)
+                val testParse = cjo.parseVectorOfDsePassages(j)
                 testParse.size match {
                   case n if (n > 0) => Some(testParse)
                   case _ => None

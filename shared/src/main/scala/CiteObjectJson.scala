@@ -549,28 +549,28 @@ package citejson {
         }
       }
 
-      def dsesForVectorOfCiteObjects(jsonString:String):Option[Vector[DseRecord]] = {
+      def dsesForVectorOfCiteObjects(jsonString:String):Option[Vector[DsePassage]] = {
         try {
           val doc: Json = parse(jsonString).getOrElse(Json.Null)
-          val dseRec:Option[Vector[DseRecord]] = dsesForVectorOfCiteObjects(doc)
+          val dseRec:Option[Vector[DsePassage]] = dsesForVectorOfCiteObjects(doc)
           dseRec 
         } catch {
           case e:Exception =>  throw new CiteJsonException(s"${e}")
         }
       }     
 
-      def dsesForVectorOfCiteObjects(doc:io.circe.Json):Option[Vector[DseRecord]] = {
+      def dsesForVectorOfCiteObjects(doc:io.circe.Json):Option[Vector[DsePassage]] = {
         try {
           if(doc == Json.Null) throw new CiteJsonException(s"Null JSON")
           // We need a cursor to get stuff
           val cursor: HCursor = doc.hcursor
           val dseRecsJson = cursor.downField("dse").as[Json]
           //println(s"dseRecsJson: ${dseRecsJson}")
-          val returnVec:Option[Vector[DseRecord]] = {
+          val returnVec:Option[Vector[DsePassage]] = {
             dseRecsJson match {
               case Right(j) => {
                 val cjo:DseJson = DseJson()
-                val testParse = cjo.parseVectorOfDseRecords(j)
+                val testParse = cjo.parseVectorOfDsePassages(j)
                 testParse.size match {
                   case n if (n > 0) => Some(testParse)
                   case _ => None

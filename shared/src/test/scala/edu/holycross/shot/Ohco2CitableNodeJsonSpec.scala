@@ -17,12 +17,64 @@ class Ohco2CitableNodeJsonSpec extends FlatSpec {
   """
 
   val dsesForCorpusJson:String = """
-{"citableNodes":[{"urn":"urn:cts:greekLit:tlg0012.tlg001.msA:1.1","text":"Μῆνιν ἄειδε θεὰ Πηληϊάδεω \t\t\t\t\t\tἈχιλῆος"},{"urn":"urn:cts:greekLit:tlg0012.tlg001.msA:1.2","text":"οὐλομένην· ἡ μυρί' Ἀχαιοῖς ἄλγε' ἔθηκεν·"}],"dse":{"dseRecords":[{"imageroi":"urn:cite2:hmt:vaimg.2017a:VA012RN_0013@0.0611,0.2252,0.4675,0.0901","surface":"urn:cite2:hmt:msA.v1:12r","label":"DSE record for Iliad 1.1","passage":"urn:cts:greekLit:tlg0012.tlg001.msA:1.1","citeObject":{"citeObject":{"urn":"urn:cite2:hmt:va_dse.v1:il10","label":"DSE record for Iliad 1.1"},"citePropertyValues":[{"propertyDefLabel":"Image region of interest","propertyDefVocab":"","propertyType":"Cite2UrnType","propertyUrn":"urn:cite2:hmt:va_dse.v1.imageroi:il10","propertyValue":"urn:cite2:hmt:vaimg.2017a:VA012RN_0013@0.0611,0.2252,0.4675,0.0901"},{"propertyDefLabel":"Artifact surface","propertyDefVocab":"","propertyType":"Cite2UrnType","propertyUrn":"urn:cite2:hmt:va_dse.v1.surface:il10","propertyValue":"urn:cite2:hmt:msA.v1:12r"},{"propertyDefLabel":"Text passage","propertyDefVocab":"","propertyType":"CtsUrnType","propertyUrn":"urn:cite2:hmt:va_dse.v1.passage:il10","propertyValue":"urn:cts:greekLit:tlg0012.tlg001.msA:1.1"}]}},{"imageroi":"urn:cite2:hmt:vaimg.2017a:VA012RN_0013@0.1632,0.2523,0.3323,0.0248","surface":"urn:cite2:hmt:msA.v1:12r","label":"DSE record for Iliad 1.2","passage":"urn:cts:greekLit:tlg0012.tlg001.msA:1.2","citeObject":{"citeObject":{"urn":"urn:cite2:hmt:va_dse.v1:il11","label":"DSE record for Iliad 1.2"},"citePropertyValues":[{"propertyDefLabel":"Image region of interest","propertyDefVocab":"","propertyType":"Cite2UrnType","propertyUrn":"urn:cite2:hmt:va_dse.v1.imageroi:il11","propertyValue":"urn:cite2:hmt:vaimg.2017a:VA012RN_0013@0.1632,0.2523,0.3323,0.0248"},{"propertyDefLabel":"Artifact surface","propertyDefVocab":"","propertyType":"Cite2UrnType","propertyUrn":"urn:cite2:hmt:va_dse.v1.surface:il11","propertyValue":"urn:cite2:hmt:msA.v1:12r"},{"propertyDefLabel":"Text passage","propertyDefVocab":"","propertyType":"CtsUrnType","propertyUrn":"urn:cite2:hmt:va_dse.v1.passage:il11","propertyValue":"urn:cts:greekLit:tlg0012.tlg001.msA:1.2"}]}}]}}
+  {
+  "citableNodes": [
+    {
+      "urn": "urn:cts:greekLit:tlg0012.tlg001.msA:1.1",
+      "text": "Μῆνιν ἄειδε θεὰ Πηληϊάδεω Ἀχιλῆος"
+    },
+    {
+      "urn": "urn:cts:greekLit:tlg0012.tlg001.msA:1.2",
+      "text": "οὐλομένην· ἡ μυρί' Ἀχαιοῖς ἄλγε' ἔθηκεν·"
+    }
+  ],
+  "commentary": {
+    "citeTriples": []
+  },
+  "dse": {
+    "dseRecords": [
+      {
+        "imageroi": "urn:cite2:hmt:vaimg.2017a:VA012RN_0013@0.0611,0.2252,0.4675,0.0901",
+        "label": "DSE record for Iliad 1.1",
+        "passage": "urn:cts:greekLit:tlg0012.tlg001.msA:1.1",
+        "surface": "urn:cite2:hmt:msA.v1:12r",
+        "urn": "urn:cite2:hmt:va_dse.v1:il10"
+      },
+      {
+        "imageroi": "urn:cite2:hmt:vaimg.2017a:VA012RN_0013@0.1632,0.2523,0.3323,0.0248",
+        "label": "DSE record for Iliad 1.2",
+        "passage": "urn:cts:greekLit:tlg0012.tlg001.msA:1.2",
+        "surface": "urn:cite2:hmt:msA.v1:12r",
+        "urn": "urn:cite2:hmt:va_dse.v1:il11"
+      }
+    ]
+  }
+}
   """
 
  val hmtTest1:String = """
-{"citableNodes":[{"urn":"urn:cts:greekLit:tlg0012.tlg001.msA:1.2","text":"οὐλομένην· ἡ μυρί' Ἀχαιοῖς ἄλγε' ἔθηκεν·"}],"dse":{"dseRecords":[{"imageroi":"urn:cite2:hmt:vaimg.2017a:VA012RN_0013@0.1632,0.2523,0.3323,0.0248","surface":"urn:cite2:hmt:msA.v1:12r","label":"DSE record for Iliad 1.2","passage":"urn:cts:greekLit:tlg0012.tlg001.msA:1.2","citeObject":{"citeObject":{"urn":"urn:cite2:hmt:va_dse.v1:il11","label":"DSE record for Iliad 1.2"},"citePropertyValues":[{"propertyDefLabel":"Image region of interest","propertyDefVocab":"","propertyType":"Cite2UrnType","propertyUrn":"urn:cite2:hmt:va_dse.v1.imageroi:il11","propertyValue":"urn:cite2:hmt:vaimg.2017a:VA012RN_0013@0.1632,0.2523,0.3323,0.0248"},{"propertyDefLabel":"Artifact surface","propertyDefVocab":"","propertyType":"Cite2UrnType","propertyUrn":"urn:cite2:hmt:va_dse.v1.surface:il11","propertyValue":"urn:cite2:hmt:msA.v1:12r"},{"propertyDefLabel":"Text passage","propertyDefVocab":"","propertyType":"CtsUrnType","propertyUrn":"urn:cite2:hmt:va_dse.v1.passage:il11","propertyValue":"urn:cts:greekLit:tlg0012.tlg001.msA:1.2"}]}}]},"commentary":{"citeTriples":[{"urn1":"urn:cts:greekLit:tlg5026.msA.hmt_xml:1.6","relation":"urn:cite2:cite:verbs.v1:commentsOn","urn2":"urn:cts:greekLit:tlg0012.tlg001.msA:1.2"},{"urn1":"urn:cts:greekLit:tlg5026.msA.hmt_xml:1.7","relation":"urn:cite2:cite:verbs.v1:commentsOn","urn2":"urn:cts:greekLit:tlg0012.tlg001.msA:1.2"}]}}
-
+{
+  "citableNodes": [
+    {
+      "urn": "urn:cts:greekLit:tlg0012.tlg001.msA:1.2",
+      "text": "οὐλομένην· ἡ μυρί' Ἀχαιοῖς ἄλγε' ἔθηκεν·"
+    }
+  ],
+  "commentary": {
+    "citeTriples": []
+  },
+  "dse": {
+    "dseRecords": [
+      {
+        "imageroi": "urn:cite2:hmt:vaimg.2017a:VA012RN_0013@0.1632,0.2523,0.3323,0.0248",
+        "label": "DSE record for Iliad 1.2",
+        "passage": "urn:cts:greekLit:tlg0012.tlg001.msA:1.2",
+        "surface": "urn:cite2:hmt:msA.v1:12r",
+        "urn": "urn:cite2:hmt:va_dse.v1:il11"
+      }
+    ]
+  }
+}
  """
 
 
@@ -75,17 +127,17 @@ val corpusNoCommentary:String = """
   it should "parse a DSE record attached to a corpus" in {
     val cjo:Ohco2Json = Ohco2Json()
     assert(cjo.exists)
-    val optDse:Option[Vector[DseRecord]] = cjo.dsesForCorpus(dsesForCorpusJson)
+    val optDse:Option[Vector[DsePassage]] = cjo.dsesForCorpus(dsesForCorpusJson)
     assert(optDse != None)
     assert(optDse.get.size == 2)
     assert(optDse.get(0).surface == Cite2Urn("urn:cite2:hmt:msA.v1:12r"))
-    assert(optDse.get(1).citeObject.urn == Cite2Urn("urn:cite2:hmt:va_dse.v1:il11"))
+    assert(optDse.get(1).urn == Cite2Urn("urn:cite2:hmt:va_dse.v1:il11"))
   }
 
   it should "parse a DSE record from real HMT data attached to a corpus" in {
     val cjo:Ohco2Json = Ohco2Json()
     assert(cjo.exists)
-    val optDse:Option[Vector[DseRecord]] = cjo.dsesForCorpus(hmtTest1)
+    val optDse:Option[Vector[DsePassage]] = cjo.dsesForCorpus(hmtTest1)
     assert(optDse != None)
     assert(optDse.get.size == 1)
   }

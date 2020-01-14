@@ -13,14 +13,14 @@ lazy val root = project.in(file(".")).
       publishLocal := {}
     )
     
-val circeVersion = "0.11.0"
+val circeVersion = "0.13.0-M2"
 
 
-lazy val crossed = crossProject.in(file(".")).
-    settings(
+lazy val crossed = crossProject(JSPlatform, JVMPlatform).in(file("."))
+.settings(
       name := "citejson",
       organization := "edu.holycross.shot",
-      version := "2.10.0",
+      version := "3.0.0",
       licenses += ("GPL-3.0",url("https://opensource.org/licenses/gpl-3.0.html")),
       resolvers += Resolver.jcenterRepo,
       resolvers += Resolver.bintrayRepo("eumaeus", "maven"),
@@ -29,17 +29,16 @@ lazy val crossed = crossProject.in(file(".")).
       libraryDependencies ++= Seq(
         "org.scala-js" %% "scalajs-stubs" % scalaJSVersion % "provided",
         "org.scalatest" %%% "scalatest" % "3.0.1" % "test",
-        "edu.holycross.shot.cite" %%% "xcite" % "4.0.2",
-        "edu.holycross.shot" %%% "citeobj" % "7.3.0",
-        "edu.holycross.shot" %%% "citerelations" % "2.4.0",
-        "edu.holycross.shot" %%% "ohco2" % "10.12.5",
-        "edu.holycross.shot" %%% "dse" % "3.1.0",
-        "edu.holycross.shot" %%% "scm" % "6.2.0"
+        "edu.holycross.shot.cite" %%% "xcite" % "4.2.0",
+        "edu.holycross.shot" %%% "citeobj" % "7.4.0",
+        "edu.holycross.shot" %%% "citerelations" % "2.6.0",
+        "edu.holycross.shot" %%% "ohco2" % "10.18.2",
+        "edu.holycross.shot" %%% "dse" % "6.0.3",
+        "edu.holycross.shot" %%% "scm" % "7.2.0"
       ),
       libraryDependencies ++= Seq(
         "io.circe" %%% "circe-core",
         "io.circe" %%% "circe-generic",
-        "io.circe" %%% "circe-optics",
         "io.circe" %%% "circe-parser"
       ).map(_ % circeVersion)
     ).

@@ -1,5 +1,7 @@
 # citejson: release notes
 
+**2.10.0**: Updated versions of Circe dependencies to v.0.13.0-M2. Parsing DSE data from DSE v.6.0.4 (a breaking change), as delivered by SCS-AKKA v.2.0.0. Fixed `build.sbt` to remove deprecated cross-compile setup.
+
 **2.10.0**: Updated versions of Circe dependencies.
 
 **2.9.0**: OHCO2 10.12.5 and xCite 4.0.2.
