@@ -1,6 +1,8 @@
 # citejson: release notes
 
-**2.10.0**: Updated versions of Circe dependencies to v.0.13.0-M2. Parsing DSE data from DSE v.6.0.4 (a breaking change), as delivered by SCS-AKKA v.2.0.0. Fixed `build.sbt` to remove deprecated cross-compile setup.
+**3.0.1**: Artifact published now at https://terracotta.hpcc.uh.edu/nexus/repository/maven-releases/
+
+**3.0.0**: Updated versions of Circe dependencies to v.0.13.0-M2. Parsing DSE data from DSE v.6.0.4 (a breaking change), as delivered by SCS-AKKA v.2.0.0. Fixed `build.sbt` to remove deprecated cross-compile setup.
 
 **2.10.0**: Updated versions of Circe dependencies.
 
